@@ -87,7 +87,10 @@ users.each do |user|
     furniture = Furniture.create!(project: project, **furn_idea)
     chat      = Chat.create!(project: project, furniture: furniture, title: "Recherche : #{furniture.title}")
 
-    rand(3..8).times { Message.create!(chat: chat, title: MESSAGES_SAMPLES.sample) }
+    rand(3..8).times do |i|
+      role = i.even? ? "user" : "assistant"
+      Message.create!(chat: chat, title: MESSAGES_SAMPLES.sample, role: role)
+    end
   end
 end
 
