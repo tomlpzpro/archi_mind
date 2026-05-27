@@ -1,14 +1,12 @@
 <div class="row">
   <div class="col">
     <h1><%= @project.title %></h1>
-    <%= raw(@project.description) %>
-    <%# <%= raw(render_markdown(@project.description)) %> %>
-
+    <%= @project.description %>
   </div>
   <div class="col-md-3">
     <h2>Chats</h2>
     <div class="mb-4">
-      <% if @chats.any? %>
+      <% if @chats.present? %>
         <ul>
           <% @chats.each do |chat| %>
             <li><%= link_to chat.title, chat_path(chat) %></li>
@@ -23,8 +21,8 @@
 
 <div class="row">
   <div class="col">
-    <h1><%= @project.name %></h1>
-    <%= raw(render_markdown(@project.content)) %>
+    <h1><%= @project.title %></h1>
+    <%= @project.description %>
   </div>
   <div class="col-md-3">
     <h2>Chats</h2>
@@ -34,13 +32,44 @@
   </div>
 </div>
 
-<%= link_to "← #{@chat.project.name}", project_path(@chat.project) %>
+<div class="all-projects">
+  <div class="card-trip">
+    <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+    <div class="card-trip-infos">
+      <div>
+        <h2>Title here</h2>
+        <p>Short description here!</p>
+      </div>
+    </div>
+  </div>
 
-<h1 id="chat_title"><%= @chat.title %></h1>
+  <div class="card-trip">
+    <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+    <div class="card-trip-infos">
+      <div>
+        <h2>Title here</h2>
+        <p>Short description here!</p>
+      </div>
+    </div>
+  </div>
 
-<div id="new_message_container">
-  <%= simple_form_for [@chat, @message] do |f| %>
-    <%= f.input :content, label: "Ask a question", required: true, placeholder: "How should I get started with the project?" %>
-    <%= f.button :submit, 'Ask LLM', class: 'btn btn-primary' %>
-  <% end %>
+  <div class="card-trip">
+    <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+    <div class="card-trip-infos">
+      <div>
+        <h2>Title here</h2>
+        <p>Short description here!</p>
+      </div>
+    </div>
+  </div>
+
+<div>
+  <%= button_to "Nouveau chat", project_chats_path(@project), method: :post %>
 </div>
+<%# <%= link_to "← #{@chat.project.title}", project_path(@chat.project) %>
+
+<% if @chat.present? %>
+  <h1 id="chat_title"><%= @chat.title %></h1>
+<% else %>
+  <p>Aucun chat pour ce projet pour le moment.</p>
+<% end %>
