@@ -14,7 +14,7 @@ class ChatsController < ApplicationController
     if @chat.save
       redirect_to chat_path(@chat)
     else
-      @chats = @project.chats.where(user: current_user)
+      # @chats = @project.chats.where(user: current_user)
       render "projects/show"
     end
   end
