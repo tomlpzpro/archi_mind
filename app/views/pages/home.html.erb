@@ -1,5 +1,50 @@
-<h1>Pages#home</h1>
-<h2>TEST HOME PAGE</h2>
+<div class="container">
+
+  <div class="header">
+    <h1>Bienvenue !</h1>
+
+      <p>Donnez vie à vos idées d’intérieur, explorez des concepts et transformez vos projets en images grâce à l’IA.
+        <br>Créez, imaginez, visualisez.</p>
+      <h2>Que voulez-vous <span class="highlight">créer</span> aujourd'hui ? </h2>
+    <%# <button path, class="btn-grey">Create New Project</button> %>
+    <%= link_to "New Project", new_project_path, class: "btn-grey" %>
+  </div>
+
+<div class="title-projects">
+  <h3>VOS PROJETS</h3>
+</div>
+
+<div class="all-projects">
+  <div class="card-trip">
+    <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+    <div class="card-trip-infos">
+      <div>
+        <h2>Title here</h2>
+        <p>Short description here!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-trip">
+    <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+    <div class="card-trip-infos">
+      <div>
+        <h2>Title here</h2>
+        <p>Short description here!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-trip">
+    <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+    <div class="card-trip-infos">
+      <div>
+        <h2>Title here</h2>
+        <p>Short description here!</p>
+      </div>
+    </div>
+  </div>
 
 
-<p>Find me in app/views/pages/home.html.erb</p>
+</div>
+</div>
