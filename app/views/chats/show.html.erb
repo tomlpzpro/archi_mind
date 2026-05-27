@@ -1,0 +1,11 @@
+<h1><%= @chat.title %></h1>
+
+<% @messages.each do |message| %>
+  <p><strong><%= message.role %>:</strong> <%= message.title %></p>
+<% end %>
+
+
+<%= form_with model: [@chat, @message] do |f| %>
+  <%= f.text_field :title, placeholder: "Affiner : « ajoute une bibliothèque, change le canapé en velours... »" %>
+  <%= f.submit "Envoyer" %>
+<% end %>

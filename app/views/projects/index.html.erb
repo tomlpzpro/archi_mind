@@ -1,0 +1,11 @@
+<h1>Mes projets</h1>
+
+<%= link_to "+ Nouveau projet", new_project_path, class: "btn-primary" %>
+
+<% @projects.each do |project| %>
+  <div>
+    <h2><%= project.title %></h2>
+    <p><%= project.description %></p>
+    <%= link_to "Voir le projet", project_path(project) %>
+  </div>
+<% end %>
