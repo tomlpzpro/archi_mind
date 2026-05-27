@@ -1,50 +1,48 @@
-<div class="container">
+<div class="home">
 
-  <div class="header">
-    <h1>Bienvenue !</h1>
+  <section class="home-hero">
+    <p class="label-mono">Archi Mind</p>
+    <h1>Sur quel projet voulez-vous <em>travailler</em> aujourd'hui ?</h1>
+    <p class="home-hero__lead">
+      Donnez vie à vos idées d'intérieur, explorez des concepts et
+      transformez vos projets en images grâce à l'IA.
+    </p>
+    <%= link_to new_project_path, class: "btn btn-primary home-hero__cta" do %>
+      <span class="home-hero__plus">+</span> Créer un nouveau projet
+    <% end %>
+  </section>
 
-      <p>Donnez vie à vos idées d’intérieur, explorez des concepts et transformez vos projets en images grâce à l’IA.
-        <br>Créez, imaginez, visualisez.</p>
-      <h2>Que voulez-vous <span class="highlight">créer</span> aujourd'hui ? </h2>
-    <%# <button path, class="btn-grey">Create New Project</button> %>
-    <%= link_to "New Project", new_project_path, class: "btn-grey" %>
-  </div>
-
-<div class="title-projects">
-  <h3>VOS PROJETS</h3>
-</div>
-
-<div class="all-projects">
-  <div class="card-trip">
-    <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-    <div class="card-trip-infos">
-      <div>
-        <h2>Title here</h2>
-        <p>Short description here!</p>
+  <% if user_signed_in? %>
+    <section class="home-projects">
+      <div class="section-head">
+        <h3 class="label-mono">Vos projets</h3>
       </div>
-    </div>
-  </div>
 
-  <div class="card-trip">
-    <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-    <div class="card-trip-infos">
-      <div>
-        <h2>Title here</h2>
-        <p>Short description here!</p>
-      </div>
-    </div>
-  </div>
+      <% if @projects.any? %>
+        <div class="all-projects">
+          <% @projects.each do |project| %>
+            <article class="card-trip">
+              <div class="card-trip__thumb"></div>
+              <div class="card-trip-infos">
+                <div>
+                  <h2><%= project.title %></h2>
+                  <p>
+                    <%= pluralize(project.furnitures.size, "pièce") %>
+                    · maj <%= project.updated_at.strftime("%d/%m") %>
+                  </p>
+                </div>
+                <%= link_to "Ouvrir", project_path(project), class: "btn btn-pill card-trip__open" %>
+              </div>
+            </article>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="empty-state">
+          <p>Vous n'avez pas encore de projet.</p>
+          <%= link_to "Créer votre premier projet", new_project_path, class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </section>
+  <% end %>
 
-  <div class="card-trip">
-    <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-    <div class="card-trip-infos">
-      <div>
-        <h2>Title here</h2>
-        <p>Short description here!</p>
-      </div>
-    </div>
-  </div>
-
-
-</div>
 </div>

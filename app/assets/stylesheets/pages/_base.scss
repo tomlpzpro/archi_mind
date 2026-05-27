@@ -1,0 +1,80 @@
+// Global base — applies the Archi Mind look across every page
+// ------------------------------------------------------------------
+
+body {
+  background-color: $cream;
+  color: $ink;
+  font-family: $body-font;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 32px 96px;
+}
+
+// Editorial serif headings with terracotta italic accents
+h1, h2, h3, h4 {
+  font-family: $headers-font;
+  color: $ink;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.12;
+  margin-bottom: 0.4em;
+}
+
+h2 {
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 600;
+}
+
+// `<em>` inside headings + the `.highlight` span → terracotta italic
+h1 em, h2 em, h3 em,
+.highlight {
+  color: $terracotta;
+  font-style: italic;
+  font-weight: inherit;
+}
+
+// Body copy
+p {
+  color: $ink-soft;
+  line-height: 1.6;
+}
+
+a {
+  color: $terracotta;
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: darken($terracotta, 8%);
+  }
+}
+
+// Monospace micro-label — e.g. "VOS PROJETS", "3 PIÈCES · MAJ 2 H"
+%mono-label,
+.label-mono {
+  font-family: $mono-font;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $muted;
+}
+
+// Flash messages
+.notice, .alert {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px;
+
+  &:empty { display: none; }
+}
+.notice { color: $terracotta-soft; }
+.alert  { color: $terracotta; }
