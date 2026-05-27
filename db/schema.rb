@@ -10,26 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_27_093523) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_27_122725) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "chats", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.bigint "furniture_id", null: false
     t.bigint "project_id", null: false
     t.string "title"
     t.datetime "updated_at", null: false
-    t.index ["furniture_id"], name: "index_chats_on_furniture_id"
     t.index ["project_id"], name: "index_chats_on_project_id"
   end
 
   create_table "furnitures", force: :cascade do |t|
+    t.bigint "chat_id"
     t.datetime "created_at", null: false
     t.text "description"
     t.bigint "project_id", null: false
     t.string "title"
     t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_furnitures_on_chat_id"
     t.index ["project_id"], name: "index_furnitures_on_project_id"
   end
 
@@ -64,8 +64,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_093523) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "chats", "furnitures"
   add_foreign_key "chats", "projects"
+  add_foreign_key "furnitures", "chats"
   add_foreign_key "furnitures", "projects"
   add_foreign_key "messages", "chats"
   add_foreign_key "projects", "users"

@@ -9,12 +9,13 @@ class ChatsController < ApplicationController
 
     @chat = Chat.new(title: "Untitled")
     @chat.project = @project
-    # @chat.user = current_user
+    @chat.user = current_user
 
     if @chat.save
       redirect_to chat_path(@chat)
     else
-      @chats = @project.chats.where(user: current_user)
+      # @chats = @project.chats.where(user: current_user)
+      puts @chat.errors.full_messages
       render "projects/show"
     end
   end
