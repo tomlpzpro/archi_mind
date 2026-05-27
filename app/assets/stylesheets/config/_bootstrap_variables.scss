@@ -11,18 +11,26 @@ $body-bg:                $light-gray;
 $font-size-base:         1rem;
 
 // Colors
-$body-color: $gray;
-$primary:    $blue;
+$body-color: $ink;
+$primary:    $terracotta;
 $success:    $green;
 $info:       $yellow;
 $danger:     $red;
 $warning:    $orange;
 
-// Buttons & inputs' radius
-$border-radius-sm:            .0625rem;
-$border-radius:               .125rem;
-$border-radius-lg:            .25rem;
-$border-radius-xl:            .5rem;
-$border-radius-xxl:           1rem;
+// Links
+$link-color:            $terracotta;
+$link-hover-color:      darken($terracotta, 8%);
+$link-decoration:       none;
+$link-hover-decoration: underline;
+
+// Buttons & inputs' radius — soft, rounded UI
+$border-radius-sm:            .375rem;
+$border-radius:               .5rem;
+$border-radius-lg:            .75rem;
+$border-radius-xl:            1rem;
+$border-radius-xxl:           1.25rem;
 
 // Override other variables below!
+$headings-font-weight: 700;
+$headings-color:       $ink;

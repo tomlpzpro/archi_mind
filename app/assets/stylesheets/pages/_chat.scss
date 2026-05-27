@@ -1,0 +1,99 @@
+// Discussion / chat page — Archi Mind
+// Targets the markup in app/views/chats/show.html.erb
+// ------------------------------------------------------------------
+
+#chat_title {
+  font-family: $headers-font;
+  font-style: italic;
+  font-weight: 600;
+  margin: 12px 0 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid $line;
+}
+
+// Each message: <p><strong>role</strong> content</p>
+main > p:has(strong) {
+  background: $surface;
+  border: 1px solid $line;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin: 0 0 14px;
+  max-width: 80%;
+  color: $ink;
+
+  strong {
+    display: block;
+    font-family: $mono-font;
+    font-size: 0.625rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: $muted;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+}
+
+// User messages (role "user") align right & go dark.
+// `:has` lets us tint by the leading role label when it reads "user".
+main > p:has(strong):nth-of-type(odd) {
+  margin-left: auto;
+  background: $ink;
+  color: #fff;
+  border-color: $ink;
+
+  strong { color: rgba(255, 255, 255, 0.6); }
+}
+
+// Composer at the bottom
+#new_message_container {
+  position: sticky;
+  bottom: 0;
+  margin-top: 32px;
+  padding: 16px 0;
+  background: linear-gradient(to top, $cream 70%, rgba(250, 246, 241, 0));
+
+  form {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    background: $surface;
+    border: 1px solid $line-strong;
+    border-radius: 16px;
+    padding: 12px 14px;
+  }
+
+  // simple_form input wrapper takes the remaining width
+  .form-group,
+  .input {
+    flex: 1;
+    margin: 0;
+  }
+
+  // hide the "Ask a question" label, keep the field airy
+  label {
+    @extend %mono-label;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  input[type="text"],
+  textarea,
+  .form-control {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 8px 6px;
+    font-size: 1rem;
+    color: $ink;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  .btn {
+    flex: 0 0 auto;
+  }
+}

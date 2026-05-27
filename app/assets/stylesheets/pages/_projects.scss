@@ -1,0 +1,50 @@
+// Project show / index pages — Archi Mind
+// ------------------------------------------------------------------
+
+// Discussion list (chats inside a project)
+.col h2,
+.col-md-3 h2 {
+  font-family: $mono-font;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $muted;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+
+  li {
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    transition: border-color 0.15s ease, transform 0.12s ease;
+
+    &:hover {
+      border-color: $line-strong;
+      transform: translateX(2px);
+    }
+
+    a {
+      color: $ink;
+      font-weight: 500;
+
+      &:hover { color: $terracotta; }
+    }
+  }
+}
+
+// Back link — "← Mes projets"
+main > a:first-child {
+  @extend %mono-label;
+  display: inline-block;
+  margin-bottom: 24px;
+  color: $muted;
+
+  &:hover { color: $ink; }
+}

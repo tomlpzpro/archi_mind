@@ -1,0 +1,76 @@
+// Buttons — Archi Mind
+// ------------------------------------------------------------------
+
+// Shared base for our custom + Bootstrap buttons
+.btn,
+.btn-grey,
+.btn-submit,
+button[type="submit"] {
+  font-family: $body-font;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  border-radius: 0.625rem;
+  transition: transform 0.12s ease, background 0.15s ease, box-shadow 0.15s ease;
+
+  &:active { transform: translateY(1px); }
+}
+
+// Dark, primary action — "Créer le projet", "Nouvelle discussion"
+.btn-primary,
+.btn-grey,
+.btn-submit,
+input.btn-submit {
+  background: $ink;
+  border: 1px solid $ink;
+  color: #fff;
+  padding: 12px 24px;
+
+  &:hover,
+  &:focus {
+    background: lighten($ink, 8%);
+    border-color: lighten($ink, 8%);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(44, 44, 42, 0.18);
+  }
+}
+
+// Full-width dark submit (forms)
+.btn-submit,
+input.btn-submit {
+  width: 100%;
+  padding: 18px 24px;
+  font-size: 1rem;
+}
+
+// Secondary / outline — pill shape, e.g. "Mes projets →", "Modifier"
+.btn-secondary,
+.btn-outline,
+.btn-pill {
+  background: $surface;
+  border: 1px solid $line-strong;
+  color: $ink;
+  padding: 9px 22px;
+  border-radius: 999px;
+
+  &:hover,
+  &:focus {
+    background: #fff;
+    border-color: $ink;
+    color: $ink;
+  }
+}
+
+// Accent text-button — terracotta
+.btn-accent {
+  background: $terracotta;
+  border: 1px solid $terracotta;
+  color: #fff;
+  padding: 12px 24px;
+
+  &:hover,
+  &:focus {
+    background: darken($terracotta, 6%);
+    border-color: darken($terracotta, 6%);
+    color: #fff;
+  }
+}
