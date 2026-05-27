@@ -1,0 +1,25 @@
+<h1>Nouveau projet</h1>
+
+<%= form_with model: @project do |f| %>
+
+  <% if @project.errors.any? %>
+    <div class="errors">
+      <% @project.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :title, "Nom du projet" %>
+    <%= f.text_field :title, placeholder: "Ex: Appartement Haussmannien" %>
+  </div>
+
+  <div>
+    <%= f.label :description, "Description" %>
+    <%= f.text_area :description, placeholder: "Décrivez le projet..." %>
+  </div>
+
+  <%= f.submit "Créer le projet" %>
+
+<% end %>
