@@ -1,0 +1,72 @@
+// Project cards — Archi Mind
+// ------------------------------------------------------------------
+
+.all-projects {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.card-trip {
+  overflow: hidden;
+  background: $surface;
+  border: 1px solid $line;
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(44, 44, 42, 0.04);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: $line-strong;
+    box-shadow: 0 12px 30px rgba(44, 44, 42, 0.10);
+  }
+
+  > img,
+  &__thumb {
+    height: 190px;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+    // warm tinted placeholder feel
+    background: linear-gradient(135deg, #E9E0D2, #CDB99E);
+  }
+
+  // Varied warm tints so the grid feels alive (matches the mockup blocks)
+  &:nth-child(4n+2) &__thumb { background: linear-gradient(135deg, #E4D3C0, #B79B7E); }
+  &:nth-child(4n+3) &__thumb { background: linear-gradient(135deg, #D9CDB6, #A8946F); }
+  &:nth-child(4n+4) &__thumb { background: linear-gradient(135deg, #E7DBC8, #C2A988); }
+
+  h2 {
+    font-family: $headers-font;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+
+  // metadata line — "3 PIÈCES · MAJ IL Y A 2 H"
+  p {
+    font-family: $mono-font;
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: $muted;
+    opacity: 1;
+    margin: 0;
+  }
+}
+
+.card-trip .card-trip-infos {
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+// "Ouvrir" pill button on each card
+.card-trip__open {
+  flex: 0 0 auto;
+  padding: 6px 16px;
+  font-size: 0.8125rem;
+}

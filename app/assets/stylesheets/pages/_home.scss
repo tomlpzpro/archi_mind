@@ -1,88 +1,75 @@
-// Specific CSS for your home-page
-body {
-  background-color: rgb(250, 246, 241);
-}
+// Home page — Archi Mind
+// (global typography & body bg live in pages/_base)
 
-.container {
-  margin-top:60px;
-}
-
-p {
-  margin: 50px;
-  font-size: 20px;
-  font-weight: 100;
-  color: rgb(75,73, 68);
-}
-
-h1, h2 {
-  font-family: 'Times New Roman', Times, serif;
-  color: rgb(75,73, 68);
-  font-weight: 700;
-}
-
-.highlight {
-  color: rgb(187, 123, 95);
-}
-
-.btn-grey {
-  color: white;
-  padding: 8px 24px;
-  border-radius: 4px;
-  border: 1px solid rgb(75, 73, 68);
-  background: rgb(75, 73, 68);
-  margin-top: 20px;
-}
-
-h3 {
-  font-family: Courier, monospace, light;
-  color: rgb(75,73, 68);
-  font-size: 20px;
-  border-bottom: 1px solid #e5e5e5;
-  padding-bottom: 10px;
-}
-
-.title-projects {
-  margin-top: 60px;
-}
-
-.card-trip {
-  overflow: hidden;
-  background: white;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  flex: 1; // prend l’espace disponible
-  min-width: 250px; // largeur minimale
-}
-
-.card-trip > img {
-  height: 200px;
-  width: 100%;
-  object-fit: cover;
-}
-
-.card-trip h2 {
-  font-size: 16px;
-  font-weight: bold;
-  margin: 0;
-}
-
-.card-trip p {
-  font-size: 12px;
-  opacity: .7;
-  margin: 0;
-}
-
-
-.card-trip .card-trip-infos {
-  padding: 16px;
+.home {
   display: flex;
+  flex-direction: column;
+  gap: 72px;
+}
+
+// ---- Hero ----------------------------------------------------------
+.home-hero {
+  max-width: 720px;
+
+  .label-mono {
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  &__lead {
+    font-size: 1.0625rem;
+    color: $muted;
+    max-width: 560px;
+    margin-bottom: 32px;
+  }
+
+  &__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 26px;
+    font-size: 1rem;
+  }
+
+  &__plus {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.16);
+    font-weight: 400;
+    line-height: 1;
+  }
+}
+
+// ---- Projects section ----------------------------------------------
+.section-head {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-end;
-  position: relative;
+  gap: 24px;
+  padding-bottom: 14px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid $line;
+
+  .label-mono { margin: 0; }
 }
 
-.all-projects {
-  margin-top: 30px;
-  display: flex;
-  gap: 20px; // espace entre les cards
-  flex-wrap: wrap; // permet de passer à la ligne si écran petit
+// ---- Empty state ---------------------------------------------------
+.empty-state {
+  text-align: center;
+  padding: 64px 24px;
+  background: $surface;
+  border: 1px dashed $line-strong;
+  border-radius: 20px;
+
+  p {
+    color: $muted;
+    margin-bottom: 20px;
+  }
 }
