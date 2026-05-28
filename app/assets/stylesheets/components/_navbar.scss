@@ -50,6 +50,42 @@
   }
 }
 
-.navbar-lewagon .avatar {
-  border: 1px solid $line-strong;
+/* La photo de profil : forme ronde et bordure invisible au repos */
+.navbar-lewagon img.avatar {
+  /* coins totalement ronds pour suivre la forme de la photo */
+  border-radius: 50%;
+  /* bordure ronde transparente (donc invisible) tant qu'on ne survole pas */
+  border: 2px solid transparent;
+  /* apparition douce de la bordure au survol */
+  transition: border-color 0.15s ease;
+}
+
+/* Au survol de la photo, la bordure ronde devient visible */
+.navbar-lewagon a.avatar:hover img.avatar {
+  /* bordure foncée qui épouse le cercle de la photo */
+  border-color: $ink;
+}
+
+/* Le lien autour de la photo : aucun cadre, dans tous les états */
+.navbar-lewagon a.avatar,
+.navbar-lewagon a.avatar:focus,
+.navbar-lewagon a.avatar:active {
+  /* pas de bordure */
+  border: none;
+  /* pas de contour du navigateur (le carré au clic) */
+  outline: none;
+  /* pas d'ombre */
+  box-shadow: none;
+  /* pas d'espace interne qui formerait une boîte autour de la photo */
+  padding: 0;
+  /* fond transparent */
+  background: transparent;
+}
+
+/* Le menu déroulant Bootstrap : on enlève sa fine ligne carrée et son ombre */
+.navbar-lewagon .dropdown-menu {
+  /* supprime la bordure (la ligne fine en forme de carré) */
+  border: none;
+  /* supprime l'ombre carrée */
+  box-shadow: none;
 }
