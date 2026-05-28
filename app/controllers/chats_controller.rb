@@ -31,6 +31,18 @@ class ChatsController < ApplicationController
     redirect_to chat_path(@chat)
   end
 
+  # DELETE /chats/:id → supprime une discussion
+  def destroy
+    # on retrouve la discussion
+    @chat = Chat.find(params[:id])
+    # on garde le projet en mémoire pour pouvoir y revenir après
+    projet = @chat.project
+    # on supprime la discussion
+    @chat.destroy
+    # on revient à la page du projet en gardant le mode suppression actif
+    redirect_to project_path(projet, suppression: 1)
+  end
+
   private
 
   # on autorise uniquement le champ "title" venant du formulaire
