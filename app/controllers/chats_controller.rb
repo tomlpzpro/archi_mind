@@ -7,7 +7,8 @@ class ChatsController < ApplicationController
   def create
     @project = Project.find(params[:project_id])
 
-    @chat = Chat.new(title: "Untitled")
+    # on crée une discussion sans titre (l'utilisateur le saisira sur la page du chat)
+    @chat = Chat.new(title: nil)
     @chat.project = @project
     @chat.user = current_user
 
@@ -18,5 +19,22 @@ class ChatsController < ApplicationController
       puts @chat.errors.full_messages
       render "projects/show"
     end
+  end
+
+  # PATCH /chats/:id → met à jour le titre de la discussion
+  def update
+    # on retrouve la discussion
+    @chat = Chat.find(params[:id])
+    # on enregistre le nouveau titre saisi dans le formulaire
+    @chat.update(chat_params)
+    # on revient sur la page de la discussion
+    redirect_to chat_path(@chat)
+  end
+
+  private
+
+  # on autorise uniquement le champ "title" venant du formulaire
+  def chat_params
+    params.require(:chat).permit(:title)
   end
 end

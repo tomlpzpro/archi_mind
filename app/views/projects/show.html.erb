@@ -1,48 +1,51 @@
-<h1><%= @project.title %></h1>
-<p><%= @project.description %></p>
-
-# <h2>Meubles du projet</h2>
+<%# Deux colonnes : infos du projet à gauche, discussions à droite %>
 <div class="row">
-  <div class="col">
+
+  <%# Colonne de gauche : titre et description du projet %>
+  <div class="col-md-8">
+    <%# Titre du projet %>
     <h1><%= @project.title %></h1>
-    <%= @project.description %>
+    <%# Description du projet (juste en dessous du titre) %>
+    <p><%= @project.description %></p>
   </div>
-  <div class="col-md-3">
-    <h2>Chats</h2>
+
+  <%# Colonne de droite : la partie discussions %>
+  <div class="col-md-4">
+    <%# Titre de la section des discussions %>
+    <h2>Discussions</h2>
+
+    <%# Liste des discussions du projet (ou message s'il n'y en a aucune) %>
     <div class="mb-4">
       <% if @chats.present? %>
         <ul>
           <% @chats.each do |chat| %>
-            <li><%= link_to chat.title, chat_path(chat) %></li>
+            <%# Un lien vers chaque discussion %>
+            <%# si la discussion n'a pas de titre, on affiche "Untitled" %>
+            <li><%= link_to (chat.title.presence || "Untitled"), chat_path(chat) %></li>
           <% end %>
         </ul>
       <% else %>
-        There are no chats yet.
+        Aucune discussion pour le moment.
       <% end %>
     </div>
+
+    <%# Bouton pour créer une nouvelle discussion %>
+    <%= button_to "Nouvelle discussion", project_chats_path(@project), class: "btn btn-primary" %>
   </div>
+
 </div>
 
-<div class="row">
-  <div class="col">
-    <h1><%= @project.title %></h1>
-    <%= @project.description %>
-  </div>
-  <div class="col-md-3">
-    <h2>Chats</h2>
-    <!-- ... -->
-
-    <%= button_to "New chat", project_chats_path(@project), class: "btn btn-primary" %>
-  </div>
-</div>
+<%# Titre de la section des visuels du projet %>
+<%# margin-top pour l'espacer de la section du dessus, même si elle est vide %>
+<h2 style="margin-top: 40px;">Vos visuels</h2>
 
 <div class="all-projects">
   <div class="card-trip">
     <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
     <div class="card-trip-infos">
       <div>
-        <h2>Title here</h2>
-        <p>Short description here!</p>
+        <h2>Titre ici</h2>
+        <p>Description courte ici</p>
       </div>
     </div>
   </div>
@@ -51,8 +54,8 @@
     <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
     <div class="card-trip-infos">
       <div>
-        <h2>Title here</h2>
-        <p>Short description here!</p>
+        <h2>Titre ici</h2>
+        <p>Description courte ici</p>
       </div>
     </div>
   </div>
@@ -61,16 +64,8 @@
     <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
     <div class="card-trip-infos">
       <div>
-        <h2>Title here</h2>
-        <p>Short description here!</p>
+        <h2>Titre ici</h2>
+        <p>Description courte ici</p>
       </div>
     </div>
   </div>
-
-<%# <%= link_to "← #{@chat.project.title}", project_path(@chat.project) %>
-
-<% if @chat.present? %>
-  <h1 id="chat_title"><%= @chat.title %></h1>
-<% else %>
-  <p>Aucun chat pour ce projet pour le moment.</p>
-<% end %>

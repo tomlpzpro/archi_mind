@@ -1,0 +1,77 @@
+<%# Petit CSS de la page profil (placé ici pour rester simple) %>
+<style>
+  /* conteneur centré de la page */
+  .profil {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  /* la carte blanche qui contient les infos du profil */
+  .profil-carte {
+    background: #FFFFFF;
+    border: 1px solid rgba(44, 44, 42, 0.10);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 40px;
+    text-align: center;
+  }
+  /* la photo de profil, ronde */
+  .profil-photo {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 16px;
+  }
+  /* le titre "Mon profil" */
+  .profil-carte h1 {
+    color: #2C2C2A;
+    margin-bottom: 6px;
+  }
+  /* l'email, en gris sous le titre */
+  .profil-email {
+    color: #888780;
+    margin-bottom: 28px;
+  }
+  /* une ligne d'information (ex : nombre de projets) */
+  .profil-ligne {
+    border-top: 1px solid rgba(44, 44, 42, 0.10);
+    padding: 16px 0;
+    color: #2C2C2A;
+  }
+  /* le bouton "Se déconnecter" */
+  .profil-bouton {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 12px 24px;
+    background: #2C2C2A;
+    color: #FFFFFF;
+    border-radius: 10px;
+    text-decoration: none;
+  }
+</style>
+
+<%# Conteneur de la page profil %>
+<div class="profil">
+  <%# La carte qui regroupe toutes les infos %>
+  <div class="profil-carte">
+
+    <%# Photo de profil (même image que la navbar) %>
+    <img class="profil-photo" src="https://kitt.lewagon.com/placeholder/users/ssaunier" alt="Photo de profil">
+
+    <%# Titre de la page %>
+    <h1>Mon profil</h1>
+
+    <%# Email de l'utilisateur connecté %>
+    <p class="profil-email"><%= @user.email %></p>
+
+    <%# Nombre de projets de l'utilisateur %>
+    <div class="profil-ligne">
+      Projets : <%= @projects.count %>
+    </div>
+
+    <%# Bouton pour se déconnecter %>
+    <%= link_to "Se déconnecter", destroy_user_session_path, data: { turbo_method: :delete }, class: "profil-bouton" %>
+
+  </div>
+</div>
