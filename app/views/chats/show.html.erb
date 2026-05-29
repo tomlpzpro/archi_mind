@@ -49,16 +49,9 @@
   }
 </style>
 
-<%# Formulaire pour modifier le titre de la discussion %>
-<%= form_with model: @chat, class: "titre-form" do |f| %>
-  <%# Champ du titre : vide s'il n'y a pas (encore) de titre, ce qui affiche le texte d'invitation %>
-  <%= f.text_field :title,
-        value: (@chat.title == "Untitled" ? "" : @chat.title),
-        placeholder: "Saisissez le titre de cette discussion",
-        class: "titre-champ" %>
-  <%# Bouton pour enregistrer le titre %>
-  <%= f.submit "Enregistrer le titre", class: "titre-bouton" %>
-<% end %>
+<h1 class="titre-champ">
+  <%= @chat.title %>
+</h1>
 
 <%# CSS des bulles de messages du chat %>
 <style>
