@@ -109,6 +109,9 @@
 
 <%# Tous les messages de la discussion %>
 <% @chat.messages.each do |message| %>
+<% if @chat.messages.last == message && message.role == "assistant" %>
+  <%= cl_image_tag @chat.furniture.image.key if @chat.furniture.image.attached? %>
+<% end %>
   <% if message.role == "user" %>
     <%# message de l'utilisateur : à droite, bulle foncée %>
     <div class="message message--vous">
