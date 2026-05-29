@@ -75,8 +75,14 @@
   <%# lien pour revenir à la page du projet %>
   <%= link_to "← Retour au projet", project_path(@chat.project), class: "visuel-retour" %>
 
-  <%# le visuel en grand (image d'exemple pour l'instant) %>
-  <img class="visuel-image" src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" alt="Visuel du projet">
+  <%# le visuel en grand : la photo générée du chat si elle existe, sinon une image d'exemple %>
+  <% if @chat.furniture&.image&.attached? %>
+    <%# l'image générée pour cette discussion (via Cloudinary) %>
+    <%= cl_image_tag @chat.furniture.image.key, class: "visuel-image", alt: "Visuel du projet" %>
+  <% else %>
+    <%# pas encore de visuel généré : on garde une image d'exemple %>
+    <img class="visuel-image" src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" alt="Visuel du projet">
+  <% end %>
 
   <%# titre : le meuble s'il existe, sinon le titre de la discussion %>
   <h1 class="visuel-titre">
@@ -96,12 +102,15 @@
     <% end %>
   </p>
 
+  <%# on prépare l'adresse de l'image à télécharger : la photo du chat si elle existe, sinon l'exemple %>
+  <% url_visuel = @chat.furniture&.image&.attached? ? cl_image_path(@chat.furniture.image.key) : "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" %>
+
   <%# les deux boutons : envoyer et télécharger %>
   <div class="visuel-actions">
     <%# bouton "Télécharger" : lance le téléchargement automatique via JavaScript %>
     <button type="button"
             class="visuel-bouton visuel-bouton--telecharger"
-            onclick="telechargerVisuel('https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg', 'visuel.jpg')">
+            onclick="telechargerVisuel('<%= url_visuel %>', 'visuel.jpg')">
       Télécharger
     </button>
   </div>
