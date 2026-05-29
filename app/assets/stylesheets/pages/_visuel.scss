@@ -1,0 +1,71 @@
+// Page visuel — Archi Mind
+// CSS deplace depuis app/views/chats/visuel.html.erb
+// ------------------------------------------------------------------
+
+/* conteneur centré de la page */
+.visuel-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px;
+}
+/* lien de retour en haut */
+.visuel-retour {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-family: monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8A8880;
+  text-decoration: none;
+}
+.visuel-retour:hover {
+  color: #2C2C2A;
+}
+/* le visuel en grand : image avec coins arrondis */
+.visuel-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 18px;
+  border: 1px solid rgba(44, 44, 42, 0.10);
+}
+/* le titre du visuel, en serif */
+.visuel-titre {
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2C2C2A;
+  margin: 24px 0 8px;
+}
+/* la description du visuel */
+.visuel-description {
+  color: #4B4944;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+/* la rangée des deux boutons */
+.visuel-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+/* style commun aux deux boutons */
+.visuel-bouton {
+  border-radius: 999px;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid #2C2C2A;
+}
+/* "Télécharger" : bouton clair avec contour */
+.visuel-bouton--telecharger {
+  background: #fff;
+  color: #2C2C2A;
+}
+.visuel-bouton--telecharger:hover {
+  background: #F3EFE8;
+}

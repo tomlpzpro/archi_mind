@@ -1,0 +1,72 @@
+// Page proposition (version client) — Archi Mind
+// CSS deplace depuis app/views/chats/proposition.html.erb
+// ------------------------------------------------------------------
+
+/* conteneur centré de la page */
+.proposition {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+  text-align: center;
+}
+/* la marque "Archi Mind" en haut */
+.proposition-marque {
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #2C2C2A;
+  margin-bottom: 40px;
+}
+/* petit sur-titre en gris */
+.proposition-surtitre {
+  font-family: monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8A8880;
+  margin-bottom: 10px;
+}
+/* le nom du projet, en grand titre serif */
+.proposition-titre {
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2C2C2A;
+  margin: 0 0 28px;
+}
+/* le visuel en grand, coins arrondis */
+.proposition-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 18px;
+  border: 1px solid rgba(44, 44, 42, 0.10);
+}
+/* la description sous le visuel */
+.proposition-description {
+  color: #4B4944;
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 28px auto 0;
+}
+/* le pied de page avec le slogan et le lien Archi Mind */
+.proposition-pied {
+  margin-top: 50px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(44, 44, 42, 0.10);
+}
+/* le slogan en gris */
+.proposition-slogan {
+  color: #8A8880;
+  margin-bottom: 8px;
+}
+/* le lien vers le site Archi Mind, en terracotta */
+.proposition-lien {
+  color: #C1440E;
+  font-weight: 600;
+  text-decoration: none;
+}
+.proposition-lien:hover {
+  text-decoration: underline;
+}

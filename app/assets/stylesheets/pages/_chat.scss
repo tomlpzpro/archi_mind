@@ -97,3 +97,206 @@ main > p:has(strong):nth-of-type(odd) {
     flex: 0 0 auto;
   }
 }
+
+// ==================================================================
+// CSS deplace depuis app/views/chats/show.html.erb
+// ==================================================================
+
+/* --- Titre éditable de la discussion --- */
+/* le formulaire du titre : champ à gauche, bouton à droite */
+.titre-form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0 28px;
+}
+/* le champ ressemble à un grand titre, sans bordure visible */
+.titre-champ {
+  flex: 1;
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #2C2C2A;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #E5E1D8;
+  padding: 6px 2px;
+  outline: none;
+}
+/* le texte d'invitation (placeholder) en plus clair et en italique */
+.titre-champ::placeholder {
+  color: #B8B5AE;
+  font-weight: 400;
+  font-style: italic;
+}
+/* quand on clique dans le champ, le trait du bas devient foncé */
+.titre-champ:focus {
+  border-bottom-color: #2C2C2A;
+}
+/* le bouton "Enregistrer" : petite pastille foncée */
+.titre-bouton {
+  flex: 0 0 auto;
+  background: #2C2C2A;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+/* au survol du bouton, on éclaircit un peu */
+.titre-bouton:hover {
+  background: #444;
+}
+
+/* --- Bulles de messages --- */
+/* chaque message occupe sa propre ligne */
+.message {
+  display: flex;
+  margin-bottom: 14px;
+}
+/* messages d'Archi Mind : alignés à gauche */
+.message--archi {
+  justify-content: flex-start;
+}
+/* messages de l'utilisateur : alignés à droite */
+.message--vous {
+  justify-content: flex-end;
+}
+/* la bulle qui contient le texte */
+.bulle {
+  max-width: 75%;
+  padding: 12px 18px;
+  border-radius: 18px;
+  line-height: 1.5;
+}
+/* bulle d'Archi Mind : fond clair, à gauche */
+.message--archi .bulle {
+  background: #fff;
+  border: 1px solid rgba(44, 44, 42, 0.10);
+  color: #2C2C2A;
+  border-top-left-radius: 4px;
+}
+/* bulle de l'utilisateur : fond foncé, à droite */
+.message--vous .bulle {
+  background: #2C2C2A;
+  color: #fff;
+  border-top-right-radius: 4px;
+}
+/* le nom de l'auteur, petit au-dessus du message */
+.bulle-auteur {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+  margin-bottom: 4px;
+}
+/* le Markdown crée des paragraphes : on réduit leurs marges dans la bulle */
+.bulle p {
+  margin: 0 0 8px;
+}
+/* le dernier paragraphe ne garde pas de marge en bas */
+.bulle p:last-child {
+  margin-bottom: 0;
+}
+/* les listes générées par l'IA restent lisibles dans la bulle */
+.bulle ul,
+.bulle ol {
+  margin: 4px 0;
+  padding-left: 20px;
+}
+/* le visuel généré : plus petit et avec des coins arrondis dans la bulle */
+.visuel-image {
+  display: block;
+  max-width: 220px;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+/* la rangée des deux boutons sous le message d'Archi Mind */
+.actions-visuel {
+  display: flex;
+  gap: 10px;
+  margin: 4px 0 18px;
+  flex-wrap: wrap;
+}
+/* button_to crée un petit formulaire : on enlève sa marge par défaut */
+.actions-visuel form {
+  margin: 0;
+}
+/* bouton "Générer le visuel" : pastille foncée et pleine */
+.bouton-visuel {
+  background: #2C2C2A;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+/* au survol, on éclaircit un peu */
+.bouton-visuel:hover {
+  background: #444;
+}
+/* bouton "Continuer à discuter" : version claire avec contour */
+.bouton-continuer {
+  background: #fff;
+  color: #2C2C2A;
+  border: 1px solid rgba(44, 44, 42, 0.25);
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+/* au survol, fond légèrement grisé */
+.bouton-continuer:hover {
+  background: #F2F0EA;
+}
+
+/* --- Barre d'écriture du chat (composer) --- */
+/* on espace la barre du reste de la page */
+#new_message_container {
+  margin-top: 28px;
+}
+/* la barre d'écriture : champ à gauche qui s'étire, bouton à droite */
+.composer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: #fff;
+  border: 1px solid rgba(44, 44, 42, 0.18);
+  border-radius: 999px;
+  padding: 6px 6px 6px 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+/* le champ de saisie prend toute la largeur disponible */
+.composer-champ {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #2C2C2A;
+  padding: 10px 0;
+}
+/* le texte d'invitation en gris clair */
+.composer-champ::placeholder {
+  color: #A8A6A0;
+}
+/* le bouton "Envoyer" : pastille foncée à droite */
+.composer-bouton {
+  flex: 0 0 auto;
+  background: #2C2C2A;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 11px 24px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+/* au survol du bouton, on éclaircit un peu */
+.composer-bouton:hover {
+  background: #444;
+}

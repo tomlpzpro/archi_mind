@@ -1,77 +1,3 @@
-<style>
-  .content {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 80px 32px;
-  }
-  .label-top {
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #888780;
-    margin-bottom: 20px;
-  }
-  .headline {
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 1.15;
-    color: #2C2C2A;
-    margin-bottom: 16px;
-  }
-  .headline em {
-    font-style: italic;
-    color: #C1440E;
-  }
-  .subtitle {
-    font-size: 15px;
-    color: #888780;
-    margin-bottom: 40px;
-  }
-  .field-label {
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #888780;
-    margin-bottom: 10px;
-    display: block;
-  }
-  .field-input {
-    width: 100%;
-    padding: 18px 20px;
-    font-size: 16px;
-    border: 0.5px solid rgba(0,0,0,0.15);
-    border-radius: 8px;
-    background: white;
-    color: #2C2C2A;
-    margin-bottom: 16px;
-    outline: none;
-  }
-  .field-textarea {
-    width: 100%;
-    padding: 18px 20px;
-    font-size: 16px;
-    border: 0.5px solid rgba(0,0,0,0.15);
-    border-radius: 8px;
-    background: white;
-    color: #2C2C2A;
-    margin-bottom: 16px;
-    outline: none;
-    resize: vertical;
-    min-height: 120px;
-    font-family: inherit;
-  }
-  .btn-submit {
-    width: 100%;
-    padding: 20px;
-    background: #2C2C2A;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-</style>
-
 <div class="content">
   <p class="label-top">Nouveau projet</p>
   <h1 class="headline">
@@ -83,7 +9,7 @@
   <%= form_with model: @project do |f| %>
     <% if @project.errors.any? %>
       <% @project.errors.full_messages.each do |msg| %>
-        <p style="color: #C1440E; margin-bottom: 12px;"><%= msg %></p>
+        <p class="form-erreur"><%= msg %></p>
       <% end %>
     <% end %>
 
