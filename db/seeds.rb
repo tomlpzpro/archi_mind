@@ -1,9 +1,11 @@
 # db/seeds.rb
 
 puts "Nettoyage..."
+# On detruit d abord les enfants, puis on remonte vers les parents
+# destroy_all (et pas delete_all) declenche les dependent: :destroy et nettoie les images
 Message.destroy_all
-Chat.destroy_all
 Furniture.destroy_all
+Chat.destroy_all
 Project.destroy_all
 User.destroy_all
 
@@ -64,8 +66,8 @@ MESSAGES_SAMPLES = [
 ]
 
 puts "Users..."
-emails = %w[claire marc sophie thomas lea julien emma nicolas camille antoine]
-users = emails.map { |name| User.create!(email: "#{name}@propyo.com", password: "password123") }
+emails = %w[claire marc sophie thomas lea julien emma nicolas camille antoine tom]
+users = emails.map { |user_name| User.create!(email: "#{user_name}@archi.com", password: "password123") }
 
 puts "Projects, Furnitures, Chats, Messages..."
 project_pool   = PROJECT_IDEAS.shuffle
@@ -84,8 +86,10 @@ users.each do |user|
     furn_idea = furniture_pool[f_idx % furniture_pool.size]
     f_idx += 1
 
-    furniture = Furniture.create!(project: project, **furn_idea)
-    chat      = Chat.create!(project: project, furniture: furniture, title: "Recherche : #{furniture.title}")
+    # On cree d abord le chat : il a juste besoin du projet
+    chat = Chat.create!(project: project, title: "Recherche : #{furn_idea[:title]}")
+    # Puis le meuble, qui lui a besoin du projet ET du chat (c est lui qui porte chat_id)
+    Furniture.create!(project: project, chat: chat, **furn_idea)
 
     rand(3..8).times do |i|
       role = i.even? ? "user" : "assistant"
