@@ -22,6 +22,9 @@ gem "ruby_llm", "~> 1.15.0"
 
 gem "cloudinary"
 
+# Transforme le Markdown (ex: **gras**) renvoyé par l'IA en vrai HTML mis en forme
+gem "redcarpet"
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 

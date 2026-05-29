@@ -97,6 +97,67 @@
     opacity: 0.6;
     margin-bottom: 4px;
   }
+  /* le Markdown crée des paragraphes : on réduit leurs marges dans la bulle */
+  .bulle p {
+    margin: 0 0 8px;
+  }
+  /* le dernier paragraphe ne garde pas de marge en bas */
+  .bulle p:last-child {
+    margin-bottom: 0;
+  }
+  /* les listes générées par l'IA restent lisibles dans la bulle */
+  .bulle ul,
+  .bulle ol {
+    margin: 4px 0;
+    padding-left: 20px;
+  }
+  /* le visuel généré : plus petit et avec des coins arrondis dans la bulle */
+  .visuel-image {
+    display: block;
+    max-width: 220px;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+  /* la rangée des deux boutons sous le message d'Archi Mind */
+  .actions-visuel {
+    display: flex;
+    gap: 10px;
+    margin: 4px 0 18px;
+    flex-wrap: wrap;
+  }
+  /* button_to crée un petit formulaire : on enlève sa marge par défaut */
+  .actions-visuel form {
+    margin: 0;
+  }
+  /* bouton "Générer le visuel" : pastille foncée et pleine */
+  .bouton-visuel {
+    background: #2C2C2A;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  /* au survol, on éclaircit un peu */
+  .bouton-visuel:hover {
+    background: #444;
+  }
+  /* bouton "Continuer à discuter" : version claire avec contour */
+  .bouton-continuer {
+    background: #fff;
+    color: #2C2C2A;
+    border: 1px solid rgba(44, 44, 42, 0.25);
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  /* au survol, fond légèrement grisé */
+  .bouton-continuer:hover {
+    background: #F2F0EA;
+  }
 </style>
 
 <%# Bulle d'accueil d'Archi Mind (toujours à gauche) %>
@@ -109,8 +170,14 @@
 
 <%# Tous les messages de la discussion %>
 <% @chat.messages.each do |message| %>
-<% if @chat.messages.last == message && message.role == "assistant" %>
-  <%= cl_image_tag @chat.furniture.image.key if @chat.furniture.image.attached? %>
+<% if @chat.messages.last == message && message.role == "assistant" && @chat.furniture&.image&.attached? %>
+  <%# le visuel généré, affiché dans une bulle d'Archi Mind, en plus petit %>
+  <div class="message message--archi">
+    <div class="bulle">
+      <span class="bulle-auteur">Archi Mind</span>
+      <%= cl_image_tag @chat.furniture.image.key, class: "visuel-image" %>
+    </div>
+  </div>
 <% end %>
   <% if message.role == "user" %>
     <%# message de l'utilisateur : à droite, bulle foncée %>
@@ -125,9 +192,20 @@
     <div class="message message--archi">
       <div class="bulle">
         <span class="bulle-auteur">Archi Mind</span>
-        <%= message.content %>
+        <%# on convertit le Markdown (ex: **gras**) en vrai texte mis en forme %>
+        <%= markdown(message.content) %>
       </div>
     </div>
+    <%# si c'est le dernier message d'Archi Mind, qu'un meuble a été décrit et que l'image n'est pas encore générée, on propose deux boutons %>
+    <% if @chat.messages.last == message && @chat.furniture.present? && !@chat.furniture.image.attached? %>
+      <%# data-actions-visuel sert à retrouver ce bloc pour le cacher avec le bouton "continuer" %>
+      <div class="actions-visuel" data-actions-visuel>
+        <%# bouton qui génère le visuel : envoie un POST vers l'action generer_visuel %>
+        <%= button_to "Générer le visuel", generer_visuel_chat_path(@chat), method: :post, class: "bouton-visuel" %>
+        <%# bouton qui cache simplement ces boutons pour continuer à écrire dans la barre du bas %>
+        <button type="button" class="bouton-continuer" onclick="this.closest('[data-actions-visuel]').remove()">Continuer à discuter avec Archi Mind</button>
+      </div>
+    <% end %>
   <% end %>
 <% end %>
 

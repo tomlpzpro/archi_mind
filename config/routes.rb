@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       get :proposition
       # envoi du mail de proposition au client (POST /chats/:id/envoyer_proposition)
       post :envoyer_proposition
+      # génération du visuel (image) à la demande (POST /chats/:id/generer_visuel)
+      post :generer_visuel
     end
     resources :messages, only: [:create]
   end
