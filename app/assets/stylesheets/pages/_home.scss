@@ -1,82 +1,141 @@
-// Home page — Archi Mind
-// (global typography & body bg live in pages/_base)
+// Page d'accueil — Archi Mind
+// (la typo globale et le fond du body sont dans pages/_base)
 
+// la page s'empile verticalement avec de grands espaces entre sections
 .home {
   display: flex;
   flex-direction: column;
-  gap: 72px;
+  gap: 64px;
 }
 
-// ---- Hero ----------------------------------------------------------
+// ---- Hero (grand bloc d'accroche) ----------------------------------
 .home-hero {
-  max-width: 720px;
+  // pour positionner l'élément décoratif en arrière-plan
+  position: relative;
+  // on cache la partie du décor qui dépasse du bloc
+  overflow: hidden;
+  // beau dégradé clair, du blanc vers le crème teinté
+  background: linear-gradient(155deg, #FFFFFF 0%, $wash 100%);
+  // fine bordure et coins très arrondis
+  border: 1px solid $line;
+  border-radius: $radius-lg;
+  // ombre douce pour décoller le bloc de la page
+  box-shadow: $shadow-md;
+  // de l'air interne, qui s'adapte à la largeur de l'écran
+  padding: clamp(36px, 6vw, 68px);
 
-  .label-mono {
+  // halo terracotta flou en haut à droite (effet "produit")
+  &::after {
+    content: "";
+    position: absolute;
+    top: -120px;
+    right: -120px;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(193, 68, 14, 0.18), transparent 70%);
+    // le halo ne gêne pas les clics
+    pointer-events: none;
+  }
+
+  // le contenu passe au-dessus du halo décoratif
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  // largeur de lecture confortable pour le texte
+  .home-hero__inner {
+    max-width: 640px;
+  }
+
+  // le grand titre
+  h1 {
     margin-bottom: 18px;
   }
 
-  h1 {
-    margin-bottom: 20px;
-  }
-
+  // le paragraphe d'introduction
   &__lead {
     font-size: 1.0625rem;
     color: $muted;
-    max-width: 560px;
+    max-width: 540px;
     margin-bottom: 32px;
   }
 
+  // petit badge en haut du hero
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 22px;
+    padding: 7px 14px;
+    // fond blanc translucide avec fine bordure
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid $line;
+    border-radius: $radius-pill;
+    // petit texte en monospace
+    font-family: $mono-font;
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $ink-soft;
+  }
+
+  // le bouton d'appel à l'action
   &__cta {
     display: inline-flex;
     align-items: center;
     gap: 12px;
     padding: 14px 26px;
     font-size: 1rem;
-    // hauteur de ligne serrée pour que le rond s'aligne bien avec le texte
+    // hauteur de ligne serrée pour aligner le rond avec le texte
     line-height: 1;
   }
 
+  // le "+" dans un petit rond, dans le bouton
   &__plus {
-    // on centre le "+" horizontalement et verticalement dans le rond
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    // taille du rond
     width: 22px;
     height: 22px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.16);
-    // taille du "+" et hauteur de ligne à 1 pour un centrage net
     font-size: 16px;
     line-height: 1;
     font-weight: 400;
-    // on enlève tout espace interne qui décalerait le "+"
     padding: 0;
-    // on enlève le petit espace sous le texte pour un centrage parfait
     text-indent: 0;
   }
 }
 
-// ---- Projects section ----------------------------------------------
+// ---- Section projets -----------------------------------------------
+// l'en-tête de section : titre à gauche, bouton à droite
 .section-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding-bottom: 14px;
+  padding-bottom: 16px;
   margin-bottom: 28px;
   border-bottom: 1px solid $line;
 
-  .label-mono { margin: 0; }
+  // le petit label "VOS PROJETS"
+  .label-mono {
+    margin: 0;
+    // un peu plus gros que le label standard pour faire titre de section
+    font-size: 0.75rem;
+  }
 }
 
-// ---- Empty state ---------------------------------------------------
+// ---- État vide (aucun projet) --------------------------------------
 .empty-state {
   text-align: center;
-  padding: 64px 24px;
+  padding: 72px 24px;
   background: $surface;
+  // bordure en pointillés pour suggérer "à remplir"
   border: 1px dashed $line-strong;
-  border-radius: 20px;
+  border-radius: $radius-lg;
 
   p {
     color: $muted;
@@ -84,22 +143,35 @@
   }
 }
 
-// ---- Suppression de projet -----------------------------------------
-/* Le bouton "Supprimer" de chaque carte est caché par défaut */
-.card-trip__delete {
-  display: none;
+// ---- Boutons d'action d'une carte ----------------------------------
+// les deux boutons "Ouvrir" et "Supprimer" côte à côte sous le titre
+.card-trip__actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  // les boutons restent à leur taille
+  flex: 0 0 auto;
 }
 
-/* Quand le mode suppression est activé, on affiche les boutons "Supprimer" */
-.all-projects.mode-suppression .card-trip__delete {
-  /* on rend le bouton visible */
-  display: inline-block;
-  /* fond rouge pour bien indiquer une suppression */
-  background: $terracotta;
-  /* texte blanc */
-  color: #fff;
-  /* pas de bordure */
-  border: none;
-  /* petit espace au-dessus pour le séparer du bouton "Ouvrir" */
-  margin-top: 8px;
+// le bouton "Supprimer" : pilule à contour rouge, bien identifiable
+.card-trip__delete {
+  // forme pilule cohérente avec "Ouvrir"
+  border-radius: $radius-pill;
+  padding: 7px 18px;
+  font-size: 0.8125rem;
+  // fond blanc, bordure et texte terracotta pour signaler une action
+  background: #fff;
+  border: 1px solid rgba(193, 68, 14, 0.55);
+  color: $terracotta;
+
+  // au survol, le bouton se remplit de rouge : aucun doute, c'est cliquable
+  &:hover,
+  &:focus {
+    background: $terracotta;
+    border-color: $terracotta;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(193, 68, 14, 0.28);
+  }
 }

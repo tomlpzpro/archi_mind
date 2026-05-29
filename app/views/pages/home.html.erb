@@ -1,31 +1,29 @@
 <div class="home">
 
   <section class="home-hero">
-    <p class="label-mono">Archi Mind</p>
-    <h1>Sur quel projet voulez-vous <em>travailler</em> aujourd'hui ?</h1>
-    <p class="home-hero__lead">
-      Donnez vie à vos idées d'intérieur, explorez des concepts et
-      transformez vos projets en images grâce à l'IA.
-    </p>
-    <%= link_to new_project_path, class: "btn btn-primary home-hero__cta" do %>
-      <span class="home-hero__plus">+</span> Créer un nouveau projet
-    <% end %>
+    <%# conteneur qui limite la largeur du texte du hero %>
+    <div class="home-hero__inner">
+      <%# petit badge d'accroche en haut %>
+      <span class="home-hero__badge">✦ Design d'intérieur augmenté par l'IA</span>
+      <%# grand titre principal %>
+      <h1>Sur quel projet voulez-vous <em>travailler</em> aujourd'hui ?</h1>
+      <%# paragraphe d'introduction %>
+      <p class="home-hero__lead">
+        Donnez vie à vos idées d'intérieur, explorez des concepts et
+        transformez vos projets en images grâce à l'IA.
+      </p>
+      <%# bouton d'appel à l'action vers la création de projet %>
+      <%= link_to new_project_path, class: "btn btn-primary home-hero__cta" do %>
+        <span class="home-hero__plus">+</span> Créer un nouveau projet
+      <% end %>
+    </div>
   </section>
 
   <% if user_signed_in? %>
     <section class="home-projects">
       <div class="section-head">
+        <%# titre de la section projets %>
         <h3 class="label-mono">Vos projets</h3>
-
-        <% if @projects.any? %>
-          <%# Bouton qui active/désactive le mode suppression %>
-          <%# Au clic, il ajoute ou enlève la classe "mode-suppression" sur la liste des projets %>
-          <button type="button"
-                  class="btn btn-pill"
-                  onclick="basculerModeSuppression(this)">
-            Supprimer un projet
-          </button>
-        <% end %>
       </div>
 
       <% if @projects.any? %>
@@ -42,17 +40,23 @@
               <% end %>
               <div class="card-trip-infos">
                 <div>
+                  <%# titre du projet %>
                   <h2><%= project.title %></h2>
+                  <%# nombre de pièces + date de mise à jour %>
                   <p>
                     <%= pluralize(project.furnitures.size, "pièce") %>
                     · maj <%= project.updated_at.strftime("%d/%m") %>
                   </p>
                 </div>
-                <%= link_to "Ouvrir", project_path(project), class: "btn btn-pill card-trip__open" %>
-                <%# Bouton "Supprimer" : caché par défaut, visible en mode suppression (voir le CSS) %>
-                <%# turbo: false force un rechargement complet de la page après la suppression %>
-                <%# onsubmit affiche une demande de confirmation avant de supprimer %>
-                <%= button_to "Supprimer", project_path(project), method: :delete, form: { data: { turbo: false }, onsubmit: "return confirm('Supprimer ce projet ?')" }, class: "btn card-trip__delete" %>
+                <%# groupe des deux boutons d'action, alignés à droite %>
+                <div class="card-trip__actions">
+                  <%# bouton pour ouvrir le projet %>
+                  <%= link_to "Ouvrir", project_path(project), class: "btn btn-pill card-trip__open" %>
+                  <%# bouton pour supprimer le projet (toujours visible) %>
+                  <%# turbo: false force un rechargement complet de la page après la suppression %>
+                  <%# onsubmit affiche une demande de confirmation avant de supprimer %>
+                  <%= button_to "Supprimer", project_path(project), method: :delete, form: { data: { turbo: false }, onsubmit: "return confirm('Supprimer ce projet ?')" }, class: "btn card-trip__delete" %>
+                </div>
               </div>
             </article>
           <% end %>
@@ -67,35 +71,3 @@
   <% end %>
 
 </div>
-
-<script>
-  // Fonction appelée quand on clique sur le bouton "Supprimer un projet" / "Terminé"
-  function basculerModeSuppression(bouton) {
-    // on récupère la liste des projets
-    const liste = document.querySelector('.all-projects');
-    // on ajoute ou enlève la classe "mode-suppression" ; toggle renvoie true si elle est ajoutée
-    const modeActif = liste.classList.toggle('mode-suppression');
-    // si le mode est actif on écrit "Terminé"
-    if (modeActif) {
-      bouton.textContent = "Terminé";
-    // sinon on remet le texte d'origine et on nettoie l'adresse
-    } else {
-      bouton.textContent = "Supprimer un projet";
-      // on enlève "?suppression=1" de l'adresse pour ne pas réactiver le mode si on rafraîchit
-      history.replaceState(null, "", window.location.pathname);
-    }
-  }
-
-  // Au chargement de la page : si on revient d'une suppression, on garde le mode actif
-  if (window.location.search.includes("suppression=1")) {
-    // on récupère la liste des projets
-    const listeProjets = document.querySelector(".all-projects");
-    // on récupère le bouton "Supprimer un projet"
-    const boutonSuppr = document.querySelector(".section-head button");
-    // si les deux existent, on réactive le mode et on affiche "Terminé"
-    if (listeProjets && boutonSuppr) {
-      listeProjets.classList.add("mode-suppression");
-      boutonSuppr.textContent = "Terminé";
-    }
-  }
-</script>

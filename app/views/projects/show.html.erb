@@ -29,10 +29,6 @@
 <div class="visuels-entete">
   <%# titre de la section %>
   <h2 class="visuels-titre">Vos visuels</h2>
-  <% if @chats.present? %>
-    <%# bouton qui active/désactive le mode suppression des visuels %>
-    <button type="button" id="btn-suppr-visuels" class="btn-suppr-visuels" onclick="basculerSuppressionVisuels(this)">Supprimer un visuel</button>
-  <% end %>
 </div>
 
 <div class="all-projects visuels-grille">
@@ -64,57 +60,25 @@
       </div>
 
       <div class="card-trip-infos">
-        <div>
-          <% if chat.furniture.present? %>
-            <%# titre du meuble proposé %>
-            <h2><%= chat.furniture.title %></h2>
-          <% else %>
-            <%# pas encore de meuble : on affiche le titre de la discussion %>
-            <h2><%= chat.title.presence || "Discussion" %></h2>
-          <% end %>
-          <%# lien vers la discussion, présent sur toutes les cartes %>
-          <div class="card-actions">
-            <%# bouton secondaire vers la discussion %>
-            <%= link_to "Voir le chat", chat_path(chat), class: "card-btn card-btn--secondaire" %>
-            <%# bouton principal vers la page visuel %>
-            <%= link_to "Voir le visuel", visuel_chat_path(chat), class: "card-btn card-btn--primaire" %>
-          </div>
-          <%# bouton pour supprimer ce visuel (caché sauf en mode suppression) %>
-          <%= button_to "Supprimer", chat_path(chat), method: :delete, form: { data: { turbo: false }, onsubmit: "return confirm('Supprimer ce visuel ?')" }, class: "btn card-supprimer" %>
+        <% if chat.furniture.present? %>
+          <%# titre du meuble proposé %>
+          <h2><%= chat.furniture.title %></h2>
+        <% else %>
+          <%# pas encore de meuble : on affiche le titre de la discussion %>
+          <h2><%= chat.title.presence || "Discussion" %></h2>
+        <% end %>
+        <%# les boutons, toujours collés en bas de la carte %>
+        <div class="card-actions">
+          <%# bouton secondaire vers la discussion %>
+          <%= link_to "Voir le chat", chat_path(chat), class: "card-btn card-btn--secondaire" %>
+          <%# bouton principal vers la page visuel %>
+          <%= link_to "Voir le visuel", visuel_chat_path(chat), class: "card-btn card-btn--primaire" %>
+          <%# bouton pour supprimer ce visuel %>
+          <%# turbo: false force un rechargement complet après la suppression %>
+          <%# onsubmit affiche une confirmation avant de supprimer %>
+          <%= button_to "Supprimer", chat_path(chat), method: :delete, form: { data: { turbo: false }, onsubmit: "return confirm('Supprimer ce visuel ?')" }, class: "card-btn card-btn--supprimer" %>
         </div>
       </div>
     </div>
   <% end %>
 </div>
-
-<%# ====== JavaScript du mode suppression des visuels ====== %>
-<script>
-  // Fonction appelée au clic sur "Supprimer un visuel" / "Terminé"
-  function basculerSuppressionVisuels(bouton) {
-    // on récupère la liste des visuels
-    const liste = document.querySelector('.all-projects');
-    // on ajoute ou enlève la classe "mode-suppression" ; toggle renvoie true si elle est ajoutée
-    const modeActif = liste.classList.toggle('mode-suppression');
-    // si le mode est actif on écrit "Terminé"
-    if (modeActif) {
-      bouton.textContent = "Terminé";
-    // sinon on remet le texte d'origine et on nettoie l'adresse
-    } else {
-      bouton.textContent = "Supprimer un visuel";
-      history.replaceState(null, "", window.location.pathname);
-    }
-  }
-
-  // Au chargement : si on revient d'une suppression, on garde le mode actif
-  if (window.location.search.includes("suppression=1")) {
-    // on récupère la liste des visuels
-    const liste = document.querySelector(".all-projects");
-    // on récupère le bouton "Supprimer un visuel"
-    const bouton = document.querySelector("#btn-suppr-visuels");
-    // si les deux existent, on réactive le mode et on affiche "Terminé"
-    if (liste && bouton) {
-      liste.classList.add("mode-suppression");
-      bouton.textContent = "Terminé";
-    }
-  }
-</script>

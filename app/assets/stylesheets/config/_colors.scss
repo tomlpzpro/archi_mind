@@ -2,15 +2,15 @@
 // ------------------------------------------------------------------
 
 // Semantic tokens (use these in your partials)
-$cream:            #FAF6F1; // page background
+$cream:            #F4EFE8; // page background — un peu plus marqué
 $surface:          #FBF8F3; // cards, navbar, inputs
-$ink:              #2C2C2A; // primary text & dark buttons
-$ink-soft:         #36342E; // texte courant — assombri pour plus de contraste
-$muted:            #5F5D57; // textes secondaires / petits labels — assombris pour mieux se lire
-$terracotta:       #C1440E; // accent — emphasis, links
-$terracotta-soft:  #BB7B5F; // softer accent
-$line:             rgba(44, 44, 42, 0.16); // bordures fines — un peu plus marquées
-$line-strong:      rgba(44, 44, 42, 0.30); // bordures fortes — plus visibles
+$ink:              #161512; // texte principal & boutons foncés — quasi noir pour un fort contraste
+$ink-soft:         #232220; // texte courant — bien foncé
+$muted:            #46443D; // textes secondaires / petits labels — assombris pour mieux ressortir
+$terracotta:       #B23A06; // accent — emphasis, links (un peu plus profond)
+$terracotta-soft:  #A45A3C; // softer accent
+$line:             rgba(22, 21, 18, 0.24); // bordures fines — plus visibles
+$line-strong:      rgba(22, 21, 18, 0.42); // bordures fortes — bien marquées
 
 // Status colors
 $red:    #C1440E;
@@ -22,3 +22,21 @@ $blue:   #0D6EFD;
 // Legacy aliases kept so existing partials keep compiling
 $gray:       $ink;
 $light-gray: $cream;
+
+// ------------------------------------------------------------------
+// Jetons de design (ajoutés pour un rendu plus "produit")
+// ------------------------------------------------------------------
+
+// Rayons d'arrondi : une échelle cohérente partout dans le site
+$radius-sm:   10px;  // petits éléments (badges, inputs)
+$radius:      16px;  // cartes, blocs courants
+$radius-lg:   24px;  // grands blocs (hero, sections)
+$radius-pill: 999px; // boutons en forme de pilule
+
+// Ombres douces : 3 niveaux du plus léger au plus marqué
+$shadow-sm: 0 1px 2px rgba(44, 44, 42, 0.05);
+$shadow-md: 0 8px 24px rgba(44, 44, 42, 0.08);
+$shadow-lg: 0 20px 48px rgba(44, 44, 42, 0.14);
+
+// Fond très clair teinté terracotta (pour les zones d'accent douces)
+$wash: #F6ECE6;

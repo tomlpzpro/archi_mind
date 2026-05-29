@@ -222,27 +222,13 @@ main > a:first-child {
   color: #2C2C2A;
   margin: 0;
 }
-/* le bouton qui active le mode suppression des visuels */
-.btn-suppr-visuels {
-  background: #fff;
-  color: #2C2C2A;
-  border: 1px solid #2C2C2A;
-  border-radius: 999px;
-  padding: 8px 18px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.btn-suppr-visuels:hover {
-  background: #F3EFE8;
-}
-
 /* les deux boutons d'une carte, alignés côte à côte */
 .card-actions {
   display: flex;
   gap: 10px;
-  margin-top: 14px;
+  /* auto = on pousse les boutons tout en bas de la carte */
+  /* du coup ils sont toujours à la même hauteur, peu importe la longueur du titre */
+  margin-top: auto;
   flex-wrap: wrap;
 }
 /* style commun des boutons de carte : même forme pill que partout ailleurs */
@@ -274,26 +260,20 @@ main > a:first-child {
 .card-btn--secondaire:hover {
   background: #F3EFE8;
 }
-
-/* le formulaire du bouton supprimer (dans la carte) ne prend pas de marge */
-.card-trip form {
-  margin: 0;
+/* "Supprimer" : bouton contour rouge, qui se remplit de rouge au survol */
+.card-btn--supprimer {
+  background: #fff;
+  color: #B23A06;
+  border-color: rgba(178, 58, 6, 0.55);
 }
-/* le bouton "Supprimer" d'un visuel est caché par défaut */
-.card-supprimer {
-  display: none;
-}
-/* en mode suppression, on affiche les boutons "Supprimer" en rouge */
-.all-projects.mode-suppression .card-supprimer {
-  display: inline-block;
-  margin-top: 10px;
-  background: #C1440E;
+.card-btn--supprimer:hover {
+  background: #B23A06;
+  border-color: #B23A06;
   color: #fff;
-  border: none;
-  padding: 6px 16px;
-  border-radius: 999px;
-  font-size: 0.82rem;
-  cursor: pointer;
+}
+/* le mini-formulaire créé par button_to ne prend pas de marge */
+.card-actions form {
+  margin: 0;
 }
 
 /* --- Grille des visuels (fond coloré derrière chaque image) --- */

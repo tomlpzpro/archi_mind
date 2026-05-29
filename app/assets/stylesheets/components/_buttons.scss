@@ -1,21 +1,33 @@
-// Buttons — Archi Mind
+// Boutons — Archi Mind
 // ------------------------------------------------------------------
 
-// Shared base for our custom + Bootstrap buttons
+// Base commune à nos boutons (custom + Bootstrap)
 .btn,
 .btn-grey,
 .btn-submit,
 button[type="submit"] {
+  // police et graisse
   font-family: $body-font;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.01em;
-  border-radius: 0.625rem;
-  transition: transform 0.12s ease, background 0.15s ease, box-shadow 0.15s ease;
+  // coin arrondi par défaut
+  border-radius: $radius-sm;
+  // alignement du contenu (texte + éventuelle icône)
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  // transitions douces (relief, fond, ombre)
+  transition: transform 0.12s ease, background 0.15s ease,
+              box-shadow 0.18s ease, border-color 0.15s ease;
+  // empêche le texte d'aller à la ligne dans un bouton
+  white-space: nowrap;
 
+  // léger enfoncement au clic
   &:active { transform: translateY(1px); }
 }
 
-// Dark, primary action — "Créer le projet", "Nouvelle discussion"
+// Action principale, foncée — "Créer le projet", "Nouvelle discussion"
 .btn-primary,
 .btn-grey,
 .btn-submit,
@@ -27,14 +39,16 @@ input.btn-submit {
 
   &:hover,
   &:focus {
+    // on éclaircit un peu et on soulève le bouton
     background: lighten($ink, 8%);
     border-color: lighten($ink, 8%);
     color: #fff;
-    box-shadow: 0 6px 18px rgba(44, 44, 42, 0.18);
+    transform: translateY(-1px);
+    box-shadow: $shadow-md;
   }
 }
 
-// Full-width dark submit (forms)
+// Bouton d'envoi pleine largeur (formulaires)
 .btn-submit,
 input.btn-submit {
   width: 100%;
@@ -42,7 +56,7 @@ input.btn-submit {
   font-size: 1rem;
 }
 
-// Secondary / outline — pill shape, e.g. "Mes projets →", "Modifier"
+// Secondaire / contour — pilule, ex : "Mes projets →", "Modifier"
 .btn-secondary,
 .btn-outline,
 .btn-pill {
@@ -50,17 +64,19 @@ input.btn-submit {
   border: 1px solid $line-strong;
   color: $ink;
   padding: 9px 22px;
-  border-radius: 999px;
+  border-radius: $radius-pill;
 
   &:hover,
   &:focus {
     background: #fff;
     border-color: $ink;
     color: $ink;
+    transform: translateY(-1px);
+    box-shadow: $shadow-sm;
   }
 }
 
-// Accent text-button — terracotta
+// Bouton d'accent — terracotta plein
 .btn-accent {
   background: $terracotta;
   border: 1px solid $terracotta;
@@ -72,5 +88,7 @@ input.btn-submit {
     background: darken($terracotta, 6%);
     border-color: darken($terracotta, 6%);
     color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(193, 68, 14, 0.28);
   }
 }
