@@ -11,7 +11,7 @@ class ChatsController < ApplicationController
     @project = Project.find(params[:project_id])
 
     # on crée une discussion sans titre (l'utilisateur le saisira sur la page du chat)
-    @chat = Chat.new(title: nil)
+    @chat = Chat.new(title: Chat::DEFAULT_TITLE)
     @chat.project = @project
     @chat.user = current_user
 
@@ -46,15 +46,15 @@ class ChatsController < ApplicationController
     redirect_to visuel_chat_path(@chat), notice: "Proposition envoyée à #{params[:email]} !"
   end
 
-  # PATCH /chats/:id → met à jour le titre de la discussion
-  def update
-    # on retrouve la discussion
-    @chat = Chat.find(params[:id])
-    # on enregistre le nouveau titre saisi dans le formulaire
-    @chat.update(chat_params)
-    # on revient sur la page de la discussion
-    redirect_to chat_path(@chat)
-  end
+  # # PATCH /chats/:id → met à jour le titre de la discussion
+  # def update
+  #   # on retrouve la discussion
+  #   @chat = Chat.find(params[:id])
+  #   # on enregistre le nouveau titre saisi dans le formulaire
+  #   @chat.update(chat_params)
+  #   # on revient sur la page de la discussion
+  #   redirect_to chat_path(@chat)
+  # end
 
   # DELETE /chats/:id → supprime une discussion
   def destroy
@@ -68,10 +68,10 @@ class ChatsController < ApplicationController
     redirect_to project_path(projet, suppression: 1)
   end
 
-  private
+#   private
 
-  # on autorise uniquement le champ "title" venant du formulaire
-  def chat_params
-    params.require(:chat).permit(:title)
-  end
+#   # on autorise uniquement le champ "title" venant du formulaire
+#   def chat_params
+#     params.require(:chat).permit(:title)
+#   end
 end
