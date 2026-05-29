@@ -117,6 +117,10 @@
   .card-lien:hover {
     text-decoration: underline;
   }
+  /* le 2e lien (visuel) est un peu espacé du 1er */
+  .card-lien--visuel {
+    margin-left: 16px;
+  }
 
   /* le formulaire du bouton supprimer (dans la carte) ne prend pas de marge */
   .card-trip form {
@@ -209,6 +213,8 @@
           <% end %>
           <%# lien vers la discussion, présent sur toutes les cartes %>
           <%= link_to "Voir le chat", chat_path(chat), class: "card-lien" %>
+          <%# lien vers la page visuel, juste a cote de "Voir le chat" %>
+          <%= link_to "Voir le visuel", visuel_chat_path(chat), class: "card-lien card-lien--visuel" %>
           <%# bouton pour supprimer ce visuel (caché sauf en mode suppression) %>
           <%= button_to "Supprimer", chat_path(chat), method: :delete, form: { data: { turbo: false }, onsubmit: "return confirm('Supprimer ce visuel ?')" }, class: "btn card-supprimer" %>
         </div>

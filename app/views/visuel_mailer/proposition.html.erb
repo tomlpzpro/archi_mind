@@ -1,0 +1,45 @@
+<%# Email HTML de la proposition, à la même DA que le site %>
+<%# Les styles sont "en ligne" (style="...") car beaucoup de messageries ignorent les feuilles de style %>
+
+<%# fond crème de l'email %>
+<div style="background-color: #FAF6F1; padding: 32px 16px; font-family: Helvetica, Arial, sans-serif;">
+
+  <%# la carte blanche centrée %>
+  <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #EEE2D6; border-radius: 18px; overflow: hidden;">
+
+    <%# en-tête avec la marque "Archi Mind." %>
+    <div style="padding: 28px 32px 0;">
+      <p style="font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-weight: bold; font-size: 22px; color: #2C2C2A; margin: 0;">
+        Archi Mind<span style="color: #C1440E;">.</span>
+      </p>
+    </div>
+
+    <%# message d'accueil avec le nom du projet %>
+    <div style="padding: 22px 32px 0;">
+      <p style="font-size: 16px; line-height: 1.6; color: #4B4944; margin: 0;">
+        Bonjour,<br><br>
+        Voici la proposition de votre architecte pour
+        <strong style="color: #2C2C2A;"><%= @projet.title %></strong>.
+      </p>
+    </div>
+
+    <%# bouton vers la page de présentation de la proposition %>
+    <div style="padding: 28px 32px;">
+      <a href="<%= proposition_chat_url(@chat) %>"
+         style="display: inline-block; background-color: #2C2C2A; color: #ffffff; text-decoration: none; padding: 14px 28px; border-radius: 999px; font-size: 15px;">
+        Voir la proposition
+      </a>
+    </div>
+
+    <%# pied de page : slogan + lien cliquable vers le site Archi Mind %>
+    <div style="background-color: #FBF8F3; padding: 24px 32px; text-align: center; border-top: 1px solid #EEE2D6;">
+      <p style="color: #8A8880; font-size: 13px; margin: 0 0 6px;">
+        Donnez vie à vos idées d'intérieur.
+      </p>
+      <a href="<%= root_url %>" style="color: #C1440E; font-weight: bold; text-decoration: none; font-size: 14px;">
+        Archi Mind
+      </a>
+    </div>
+
+  </div>
+</div>
