@@ -15,6 +15,9 @@ class CreateFurnitureTool < RubyLLM::Tool
       project: @project,
       chat: @chat
     )
-    { project_id: furniture.project.id, chat_id: furniture.chat.id, description: furniture.description, title: furniture.title }
+    { project_id: furniture.project.id, chat_id: furniture.chat.id, description: furniture.description,
+      title: furniture.title }
+  rescue ActiveRecord::RecordInvalid => e
+    { error: e.message }
   end
 end

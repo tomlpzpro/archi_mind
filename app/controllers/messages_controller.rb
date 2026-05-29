@@ -8,10 +8,10 @@ class MessagesController < ApplicationController
 
     Vous avez accès à des outils :
     - Créez un meuble (furniture) avec un titre et une description quand l'architecte demande une suggestion de mobilier pour son projet. Ne créez qu'un seul meuble à la fois, sauf demande explicite.
-
+    - Génère une image pour un meuble après l'avoir créé, en utilisant son id.
     Générez des réponses concises et visuellement descriptives, optimisées pour la génération d'images par IA.
 
-    Répondez clairement en Markdown.
+    Répondez clairement en texte.
   PROMPT
 
   def create
@@ -26,6 +26,7 @@ class MessagesController < ApplicationController
       @ruby_llm_chat = RubyLLM.chat
       build_conversation_history
       @ruby_llm_chat.with_tool(CreateFurnitureTool.new(chat: @chat))
+      @ruby_llm_chat.with_tool(GenerateFurnitureImageTool.new(furniture: @chat.furniture))
       response = @ruby_llm_chat.with_instructions(SYSTEM_PROMPT).ask(@message.content)
       Message.create(role: "assistant", content: response.content, chat: @chat)
 
