@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
     Vous avez accès à des outils :
     - Créez un meuble (furniture) avec un titre et une description quand l'architecte demande une suggestion de mobilier pour son projet. Ne créez qu'un seul meuble à la fois, sauf demande explicite.
     - Génère une image pour un meuble après l'avoir créé, en utilisant son id.
-    Générez des réponses concises et visuellement descriptives, optimisées pour la génération d'images par IA.
+    Générez des réponses concises et visuellement descriptives, optimisées pour la génération d'images par IA. Quand tu genere l'image, affiche la directement dans la conversation sans que l'utilisateur ai besoin de le demander.
 
     Répondez clairement en texte.
   PROMPT
