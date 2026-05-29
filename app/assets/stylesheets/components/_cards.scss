@@ -28,6 +28,11 @@
     width: 100%;
     object-fit: cover;
     display: block;
+    // pas d'espace sous/au-dessus de l'image (évite la fine ligne en haut)
+    vertical-align: top;
+    // coins du haut arrondis pour que l'image épouse le cadre de la carte
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
     // warm tinted placeholder feel
     background: linear-gradient(135deg, #E9E0D2, #CDB99E);
   }

@@ -35,8 +35,8 @@
     max-width: 620px;
   }
 
-  /* --- Panneau des discussions (colonne de droite) --- */
-  /* la "carte" qui contient toute la partie discussions */
+  /* --- Panneau (colonne de droite) --- */
+  /* la "carte" du panneau */
   .panneau {
     background: #FBF8F3;
     border: 1px solid rgba(44, 44, 42, 0.10);
@@ -52,120 +52,92 @@
     color: #8A8880;
     margin: 0 0 16px;
   }
-
-  /* la liste des discussions : pas de puces, en colonne propre */
-  .liste-discussions {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 18px;
-  }
-  /* chaque discussion : lien à gauche, bouton supprimer à droite */
-  .liste-discussions li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 11px 14px;
-    background: #fff;
-    border: 1px solid rgba(44, 44, 42, 0.08);
-    border-radius: 10px;
-    margin-bottom: 8px;
-  }
-  /* le lien de la discussion */
-  .liste-discussions li a {
-    color: #2C2C2A;
-    text-decoration: none;
-    font-weight: 500;
-  }
-  .liste-discussions li a:hover {
-    color: #C1440E;
-  }
-  /* button_to crée un <form> : on enlève sa marge pour bien aligner le bouton */
-  .liste-discussions li form {
+  /* le formulaire button_to ne prend pas de marge */
+  .panneau form {
     margin: 0;
   }
-
-  /* les deux boutons d'action empilés l'un sous l'autre (la colonne est étroite) */
-  .discussions-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  /* le formulaire button_to prend toute la largeur du panneau */
-  .discussions-actions form {
-    margin: 0;
+  /* le bouton "+ Nouvelle discussion" en pleine largeur */
+  .panneau .btn-primary {
     width: 100%;
-  }
-  /* style commun aux deux boutons d'action : même forme, pleine largeur (DA cohérente) */
-  .discussions-actions .btn {
-    width: 100%;
+    background: #2C2C2A;
+    color: #fff;
+    border: 1px solid #2C2C2A;
     border-radius: 999px;
     padding: 11px 16px;
     font-size: 0.85rem;
     font-weight: 500;
     cursor: pointer;
-    border: 1px solid #2C2C2A;
-    white-space: nowrap;
   }
-  /* "Nouvelle discussion" : bouton plein foncé (action principale) */
-  .discussions-actions .btn-primary {
-    background: #2C2C2A;
-    color: #fff;
-  }
-  .discussions-actions .btn-primary:hover {
+  .panneau .btn-primary:hover {
     background: #444;
     border-color: #444;
   }
-  /* "Supprimer une discussion" : même forme mais claire avec contour (action secondaire) */
-  .discussions-actions .btn-pill {
-    background: #fff;
-    color: #2C2C2A;
-  }
-  .discussions-actions .btn-pill:hover {
-    background: #F3EFE8;
-  }
-
-  /* le bouton "Supprimer" d'une discussion est caché par défaut */
-  .discussion-supprimer {
-    display: none;
-  }
-  /* en mode suppression, on affiche les boutons "Supprimer" en rouge */
-  .liste-discussions.mode-suppression .discussion-supprimer {
-    display: inline-block;
-    background: #C1440E;
-    color: #fff;
-    border: none;
-    padding: 3px 12px;
-    font-size: 0.78rem;
-    border-radius: 6px;
-    cursor: pointer;
-  }
 
   /* --- Section des visuels --- */
-  /* le titre "Vos visuels" : vrai titre en serif */
+  /* l'en-tête de la section : titre à gauche, bouton à droite */
+  .visuels-entete {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 48px 0 18px;
+  }
+  /* le titre "Vos visuels" en serif */
   .visuels-titre {
     font-family: 'Playfair Display', 'Times New Roman', serif;
     font-size: 1.5rem;
     font-weight: 700;
     color: #2C2C2A;
-    margin: 48px 0 18px;
+    margin: 0;
   }
-  /* la grille des visuels : s'adapte à la largeur de l'écran */
-  .visuels-grille {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
+  /* le bouton qui active le mode suppression des visuels */
+  .btn-suppr-visuels {
+    background: #fff;
+    color: #2C2C2A;
+    border: 1px solid #2C2C2A;
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
   }
-  /* un visuel : un rectangle arrondi avec un dégradé chaud */
-  .visuel {
-    aspect-ratio: 4 / 3;
-    border-radius: 14px;
-    border: 1px solid rgba(44, 44, 42, 0.08);
+  .btn-suppr-visuels:hover {
+    background: #F3EFE8;
   }
-  /* trois dégradés différents pour varier */
-  .visuel--1 { background: linear-gradient(135deg, #E9E0D2, #CDB99E); }
-  .visuel--2 { background: linear-gradient(135deg, #E4D3C0, #B79B7E); }
-  .visuel--3 { background: linear-gradient(135deg, #D9CDB6, #A8946F); }
+
+  /* le lien "Voir le chat" sur les cartes : terracotta */
+  .card-lien {
+    display: inline-block;
+    margin-top: 10px;
+    color: #C1440E;
+    font-size: 1.05rem;
+    text-decoration: none;
+  }
+  .card-lien:hover {
+    text-decoration: underline;
+  }
+
+  /* le formulaire du bouton supprimer (dans la carte) ne prend pas de marge */
+  .card-trip form {
+    margin: 0;
+  }
+  /* le bouton "Supprimer" d'un visuel est caché par défaut */
+  .card-supprimer {
+    display: none;
+  }
+  /* en mode suppression, on affiche les boutons "Supprimer" en rouge */
+  .all-projects.mode-suppression .card-supprimer {
+    display: inline-block;
+    margin-top: 10px;
+    background: #C1440E;
+    color: #fff;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
 </style>
 
 <%# ====== Contenu de la page ====== %>
@@ -183,57 +155,74 @@
     <p class="projet-description"><%= @project.description %></p>
   </div>
 
-  <%# Colonne de droite : panneau des discussions %>
+  <%# Colonne de droite : panneau pour créer une discussion %>
   <div class="col-md-4">
     <div class="panneau">
       <%# titre du panneau %>
       <h2 class="panneau-titre">Discussions</h2>
-
-      <%# liste des discussions (ou message s'il n'y en a aucune) %>
-      <% if @chats.present? %>
-        <ul class="liste-discussions">
-          <% @chats.each do |chat| %>
-            <li>
-              <%# lien vers la discussion (si pas de titre, on affiche "Untitled") %>
-              <%= link_to (chat.title.presence || "Untitled"), chat_path(chat) %>
-              <%# bouton "Supprimer" cette discussion (caché sauf en mode suppression) %>
-              <%= button_to "Supprimer", chat_path(chat), method: :delete, form: { data: { turbo: false }, onsubmit: "return confirm('Supprimer cette discussion ?')" }, class: "btn discussion-supprimer" %>
-            </li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p style="color:#8A8880;">Aucune discussion pour le moment.</p>
-      <% end %>
-
-      <%# les deux boutons d'action, sur une même ligne %>
-      <div class="discussions-actions">
-        <%# bouton pour créer une nouvelle discussion %>
-        <%= button_to "+ Nouvelle discussion", project_chats_path(@project), class: "btn btn-primary" %>
-        <% if @chats.present? %>
-          <%# bouton qui active/désactive le mode suppression %>
-          <button type="button" id="btn-suppr-discussions" class="btn btn-pill" onclick="basculerSuppressionDiscussions(this)">Supprimer une discussion</button>
-        <% end %>
-      </div>
+      <%# bouton pour créer une nouvelle discussion %>
+      <%= button_to "+ Nouvelle discussion", project_chats_path(@project), class: "btn btn-primary" %>
     </div>
   </div>
 
 </div>
 
-<%# Section des visuels du projet %>
-<p class="visuels-titre">Vos visuels</p>
-<div class="visuels-grille">
-  <%# trois visuels d'exemple (dégradés) en attendant de vrais visuels %>
-  <div class="visuel visuel--1"></div>
-  <div class="visuel visuel--2"></div>
-  <div class="visuel visuel--3"></div>
+<%# ====== Section des visuels ====== %>
+<div class="visuels-entete">
+  <%# titre de la section %>
+  <h2 class="visuels-titre">Vos visuels</h2>
+  <% if @chats.present? %>
+    <%# bouton qui active/désactive le mode suppression des visuels %>
+    <button type="button" id="btn-suppr-visuels" class="btn-suppr-visuels" onclick="basculerSuppressionVisuels(this)">Supprimer un visuel</button>
+  <% end %>
 </div>
 
-<%# ====== JavaScript du mode suppression des discussions ====== %>
+<div class="all-projects">
+  <%# Cas vide : aucune discussion, donc aucun visuel %>
+  <% if @chats.empty? %>
+    <div class="card-trip">
+      <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+      <div class="card-trip-infos">
+        <div>
+          <h2>Aucun visuel</h2>
+          <p>Crée ta première discussion pour générer un visuel.</p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%# Une carte (visuel) par discussion %>
+  <% @chats.each do |chat| %>
+    <div class="card-trip">
+      <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+
+      <div class="card-trip-infos">
+        <div>
+          <% if chat.furniture.present? %>
+            <%# titre et description du meuble proposé %>
+            <h2><%= chat.furniture.title %></h2>
+            <p><%= chat.furniture.description %></p>
+          <% else %>
+            <%# pas encore de meuble : on affiche le titre de la discussion %>
+            <h2><%= chat.title.presence || "Discussion" %></h2>
+            <p>Aucune proposition de mobilier générée pour le moment.</p>
+          <% end %>
+          <%# lien vers la discussion, présent sur toutes les cartes %>
+          <%= link_to "Voir le chat", chat_path(chat), class: "card-lien" %>
+          <%# bouton pour supprimer ce visuel (caché sauf en mode suppression) %>
+          <%= button_to "Supprimer", chat_path(chat), method: :delete, form: { data: { turbo: false }, onsubmit: "return confirm('Supprimer ce visuel ?')" }, class: "btn card-supprimer" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%# ====== JavaScript du mode suppression des visuels ====== %>
 <script>
-  // Fonction appelée au clic sur "Supprimer une discussion" / "Terminé"
-  function basculerSuppressionDiscussions(bouton) {
-    // on récupère la liste des discussions
-    const liste = document.querySelector('.liste-discussions');
+  // Fonction appelée au clic sur "Supprimer un visuel" / "Terminé"
+  function basculerSuppressionVisuels(bouton) {
+    // on récupère la liste des visuels
+    const liste = document.querySelector('.all-projects');
     // on ajoute ou enlève la classe "mode-suppression" ; toggle renvoie true si elle est ajoutée
     const modeActif = liste.classList.toggle('mode-suppression');
     // si le mode est actif on écrit "Terminé"
@@ -241,17 +230,17 @@
       bouton.textContent = "Terminé";
     // sinon on remet le texte d'origine et on nettoie l'adresse
     } else {
-      bouton.textContent = "Supprimer une discussion";
+      bouton.textContent = "Supprimer un visuel";
       history.replaceState(null, "", window.location.pathname);
     }
   }
 
   // Au chargement : si on revient d'une suppression, on garde le mode actif
   if (window.location.search.includes("suppression=1")) {
-    // on récupère la liste des discussions
-    const liste = document.querySelector(".liste-discussions");
-    // on récupère le bouton "Supprimer une discussion"
-    const bouton = document.querySelector("#btn-suppr-discussions");
+    // on récupère la liste des visuels
+    const liste = document.querySelector(".all-projects");
+    // on récupère le bouton "Supprimer un visuel"
+    const bouton = document.querySelector("#btn-suppr-visuels");
     // si les deux existent, on réactive le mode et on affiche "Terminé"
     if (liste && bouton) {
       liste.classList.add("mode-suppression");
