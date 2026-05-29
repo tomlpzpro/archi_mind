@@ -1,20 +1,194 @@
 <%= link_to "← #{@chat.project.title}", project_path(@chat.project) %>
 
-<h1 id="chat_title"><%= @chat.title %></h1>
+<%# Petit CSS pour que le titre éditable ait l'air d'un vrai titre %>
+<style>
+  /* le formulaire du titre : champ à gauche, bouton à droite */
+  .titre-form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 8px 0 28px;
+  }
+  /* le champ ressemble à un grand titre, sans bordure visible */
+  .titre-champ {
+    flex: 1;
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #2C2C2A;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #E5E1D8;
+    padding: 6px 2px;
+    outline: none;
+  }
+  /* le texte d'invitation (placeholder) en plus clair et en italique */
+  .titre-champ::placeholder {
+    color: #B8B5AE;
+    font-weight: 400;
+    font-style: italic;
+  }
+  /* quand on clique dans le champ, le trait du bas devient foncé */
+  .titre-champ:focus {
+    border-bottom-color: #2C2C2A;
+  }
+  /* le bouton "Enregistrer" : petite pastille foncée */
+  .titre-bouton {
+    flex: 0 0 auto;
+    background: #2C2C2A;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  /* au survol du bouton, on éclaircit un peu */
+  .titre-bouton:hover {
+    background: #444;
+  }
+</style>
 
+<h1 class="titre-champ">
+  <%= @chat.title %>
+</h1>
+
+<%# CSS des bulles de messages du chat %>
+<style>
+  /* chaque message occupe sa propre ligne */
+  .message {
+    display: flex;
+    margin-bottom: 14px;
+  }
+  /* messages d'Archi Mind : alignés à gauche */
+  .message--archi {
+    justify-content: flex-start;
+  }
+  /* messages de l'utilisateur : alignés à droite */
+  .message--vous {
+    justify-content: flex-end;
+  }
+  /* la bulle qui contient le texte */
+  .bulle {
+    max-width: 75%;
+    padding: 12px 18px;
+    border-radius: 18px;
+    line-height: 1.5;
+  }
+  /* bulle d'Archi Mind : fond clair, à gauche */
+  .message--archi .bulle {
+    background: #fff;
+    border: 1px solid rgba(44, 44, 42, 0.10);
+    color: #2C2C2A;
+    border-top-left-radius: 4px;
+  }
+  /* bulle de l'utilisateur : fond foncé, à droite */
+  .message--vous .bulle {
+    background: #2C2C2A;
+    color: #fff;
+    border-top-right-radius: 4px;
+  }
+  /* le nom de l'auteur, petit au-dessus du message */
+  .bulle-auteur {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.6;
+    margin-bottom: 4px;
+  }
+</style>
+
+<%# Bulle d'accueil d'Archi Mind (toujours à gauche) %>
+<div class="message message--archi">
+  <div class="bulle">
+    <span class="bulle-auteur">Archi Mind</span>
+    Bonjour, je suis Archi Mind, votre assistant pour trouver des idées de meubles adaptées à vos projets. Comment puis-je vous aider aujourd'hui ?
+  </div>
+</div>
+
+<%# Tous les messages de la discussion %>
 <% @chat.messages.each do |message| %>
 <% if @chat.messages.last == message && message.role == "assistant" %>
   <%= cl_image_tag @chat.furniture.image.key if @chat.furniture.image.attached? %>
 <% end %>
-  <p>
-    <strong><%= message.role %></strong>
-    <%= message.content %>
-  </p>
+  <% if message.role == "user" %>
+    <%# message de l'utilisateur : à droite, bulle foncée %>
+    <div class="message message--vous">
+      <div class="bulle">
+        <span class="bulle-auteur">Vous</span>
+        <%= message.content %>
+      </div>
+    </div>
+  <% else %>
+    <%# message d'Archi Mind : à gauche, bulle claire %>
+    <div class="message message--archi">
+      <div class="bulle">
+        <span class="bulle-auteur">Archi Mind</span>
+        <%= message.content %>
+      </div>
+    </div>
+  <% end %>
 <% end %>
 
+<%# CSS de la barre d'écriture du chat %>
+<style>
+  /* on espace la barre du reste de la page */
+  #new_message_container {
+    margin-top: 28px;
+  }
+  /* la barre d'écriture : champ à gauche qui s'étire, bouton à droite */
+  .composer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: #fff;
+    border: 1px solid rgba(44, 44, 42, 0.18);
+    border-radius: 999px;
+    padding: 6px 6px 6px 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  }
+  /* le champ de saisie prend toute la largeur disponible */
+  .composer-champ {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1rem;
+    color: #2C2C2A;
+    padding: 10px 0;
+  }
+  /* le texte d'invitation en gris clair */
+  .composer-champ::placeholder {
+    color: #A8A6A0;
+  }
+  /* le bouton "Envoyer" : pastille foncée à droite */
+  .composer-bouton {
+    flex: 0 0 auto;
+    background: #2C2C2A;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 11px 24px;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+  /* au survol du bouton, on éclaircit un peu */
+  .composer-bouton:hover {
+    background: #444;
+  }
+</style>
+
 <div id="new_message_container">
-    <%= simple_form_for [@chat, @message] do |f| %>
-    <%= f.input :content, label: "Ask a question", required: true, placeholder: "How should I get started with the challenge?" %>
-    <%= f.button :submit, 'Ask LLM', class: 'btn btn-primary' %>
+  <%# form_with envoie le message ; classe "composer" pour la barre arrondie %>
+  <%= simple_form_for [@chat, @message], html: { class: "composer" } do |f| %>
+    <%# input_field = juste le champ (sans label ni encadré simple_form) %>
+    <%= f.input_field :content,
+          required: true,
+          placeholder: "Décrivez ce que vous souhaitez aménager…",
+          class: "composer-champ" %>
+    <%# bouton pour envoyer le message %>
+    <%= f.button :submit, "Envoyer", class: "composer-bouton" %>
   <% end %>
 </div>

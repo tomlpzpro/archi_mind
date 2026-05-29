@@ -5,12 +5,12 @@
 $cream:            #FAF6F1; // page background
 $surface:          #FBF8F3; // cards, navbar, inputs
 $ink:              #2C2C2A; // primary text & dark buttons
-$ink-soft:         #4B4944; // softer charcoal
-$muted:            #888780; // secondary text, micro-labels
+$ink-soft:         #36342E; // texte courant — assombri pour plus de contraste
+$muted:            #5F5D57; // textes secondaires / petits labels — assombris pour mieux se lire
 $terracotta:       #C1440E; // accent — emphasis, links
 $terracotta-soft:  #BB7B5F; // softer accent
-$line:             rgba(44, 44, 42, 0.10); // hairline borders
-$line-strong:      rgba(44, 44, 42, 0.18);
+$line:             rgba(44, 44, 42, 0.16); // bordures fines — un peu plus marquées
+$line-strong:      rgba(44, 44, 42, 0.30); // bordures fortes — plus visibles
 
 // Status colors
 $red:    #C1440E;
