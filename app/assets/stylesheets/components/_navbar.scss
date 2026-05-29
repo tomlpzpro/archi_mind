@@ -1,8 +1,20 @@
 .navbar-lewagon {
+  /* logo à gauche et avatar à droite (éléments répartis aux extrémités) */
   justify-content: space-between;
+  /* fond crème clair, comme à l'origine */
   background-color: $surface;
+  /* fine ligne en bas pour séparer la navbar du contenu */
   border-bottom: 1px solid $line;
-  padding: 0.75rem 1.5rem;
+  /* légère ombre sous la navbar pour qu'elle se détache de la page */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  /* épaisseur réduite : peu d'espace en haut/bas, un peu plus sur les côtés */
+  padding: 0.35rem 1.5rem;
+  /* la navbar reste collée en haut quand on descend la page */
+  position: sticky;
+  /* collée tout en haut de l'écran (0 pixel du bord) */
+  top: 0;
+  /* passe au-dessus du reste du contenu pour ne jamais être cachée */
+  z-index: 1000;
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -17,8 +29,11 @@
   color: $ink;
 
   img {
-    width: 120px;
-    height: 50px;
+    /* logo un peu agrandi pour aller avec la photo de profil */
+    height: 46px;
+    /* la largeur s'ajuste automatiquement pour garder les proportions */
+    width: auto;
+    /* l'image n'est pas déformée */
     object-fit: contain;
     border-radius: 5px;
   }
@@ -52,6 +67,12 @@
 
 /* La photo de profil : forme ronde et bordure invisible au repos */
 .navbar-lewagon img.avatar {
+  /* largeur plus grande de la photo */
+  width: 52px;
+  /* même hauteur que la largeur pour garder un cercle parfait */
+  height: 52px;
+  /* l'image remplit le cercle sans être déformée */
+  object-fit: cover;
   /* coins totalement ronds pour suivre la forme de la photo */
   border-radius: 50%;
   /* bordure ronde transparente (donc invisible) tant qu'on ne survole pas */

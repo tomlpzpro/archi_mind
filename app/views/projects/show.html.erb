@@ -1,76 +1,250 @@
-<h1><%= @project.title %></h1>
-<p><%= @project.description %></p>
+<%# ====== CSS de la page projet ====== %>
+<style>
+  /* --- En-tête du projet (colonne de gauche) --- */
+  /* petit sur-titre "PROJET" en gris */
+  .projet-surtitre {
+    font-family: monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #8A8880;
+    margin-bottom: 8px;
+  }
+  /* le grand titre du projet, en serif */
+  .projet-titre {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #2C2C2A;
+    line-height: 1.1;
+    margin: 0 0 10px;
+  }
+  /* la ligne d'infos (nombre de discussions, date) en gris */
+  .projet-meta {
+    font-family: monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8A8880;
+    margin-bottom: 18px;
+  }
+  /* la description du projet */
+  .projet-description {
+    color: #4B4944;
+    line-height: 1.7;
+    max-width: 620px;
+  }
 
-# <h2>Meubles du projet</h2>
+  /* --- Panneau (colonne de droite) --- */
+  /* la "carte" du panneau */
+  .panneau {
+    background: #FBF8F3;
+    border: 1px solid rgba(44, 44, 42, 0.10);
+    border-radius: 16px;
+    padding: 22px;
+  }
+  /* le petit titre "Discussions" du panneau */
+  .panneau-titre {
+    font-family: monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #8A8880;
+    margin: 0 0 16px;
+  }
+  /* le formulaire button_to ne prend pas de marge */
+  .panneau form {
+    margin: 0;
+  }
+  /* le bouton "+ Nouvelle discussion" en pleine largeur */
+  .panneau .btn-primary {
+    width: 100%;
+    background: #2C2C2A;
+    color: #fff;
+    border: 1px solid #2C2C2A;
+    border-radius: 999px;
+    padding: 11px 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .panneau .btn-primary:hover {
+    background: #444;
+    border-color: #444;
+  }
+
+  /* --- Section des visuels --- */
+  /* l'en-tête de la section : titre à gauche, bouton à droite */
+  .visuels-entete {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 48px 0 18px;
+  }
+  /* le titre "Vos visuels" en serif */
+  .visuels-titre {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2C2C2A;
+    margin: 0;
+  }
+  /* le bouton qui active le mode suppression des visuels */
+  .btn-suppr-visuels {
+    background: #fff;
+    color: #2C2C2A;
+    border: 1px solid #2C2C2A;
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-suppr-visuels:hover {
+    background: #F3EFE8;
+  }
+
+  /* le lien "Voir le chat" sur les cartes : terracotta */
+  .card-lien {
+    display: inline-block;
+    margin-top: 10px;
+    color: #C1440E;
+    font-size: 1.05rem;
+    text-decoration: none;
+  }
+  .card-lien:hover {
+    text-decoration: underline;
+  }
+
+  /* le formulaire du bouton supprimer (dans la carte) ne prend pas de marge */
+  .card-trip form {
+    margin: 0;
+  }
+  /* le bouton "Supprimer" d'un visuel est caché par défaut */
+  .card-supprimer {
+    display: none;
+  }
+  /* en mode suppression, on affiche les boutons "Supprimer" en rouge */
+  .all-projects.mode-suppression .card-supprimer {
+    display: inline-block;
+    margin-top: 10px;
+    background: #C1440E;
+    color: #fff;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
+</style>
+
+<%# ====== Contenu de la page ====== %>
 <div class="row">
-  <div class="col">
-    <h1><%= @project.title %></h1>
-    <%= @project.description %>
+
+  <%# Colonne de gauche : informations du projet %>
+  <div class="col-md-8">
+    <%# petit sur-titre %>
+    <p class="projet-surtitre">Projet</p>
+    <%# titre du projet %>
+    <h1 class="projet-titre"><%= @project.title %></h1>
+    <%# nombre de discussions + date de création %>
+    <p class="projet-meta"><%= pluralize(@chats.size, "discussion") %> · créé le <%= @project.created_at.strftime("%d/%m/%Y") %></p>
+    <%# description du projet %>
+    <p class="projet-description"><%= @project.description %></p>
   </div>
-  <div class="col-md-3">
-    <h2>Chats</h2>
-    <div class="mb-4">
-      <% if @chats.present? %>
-        <ul>
-          <% @chats.each do |chat| %>
-            <li><%= link_to chat.title, chat_path(chat) %></li>
-          <% end %>
-        </ul>
-      <% else %>
-        There are no chats yet.
-      <% end %>
+
+  <%# Colonne de droite : panneau pour créer une discussion %>
+  <div class="col-md-4">
+    <div class="panneau">
+      <%# titre du panneau %>
+      <h2 class="panneau-titre">Discussions</h2>
+      <%# bouton pour créer une nouvelle discussion %>
+      <%= button_to "+ Nouvelle discussion", project_chats_path(@project), class: "btn btn-primary" %>
     </div>
   </div>
+
 </div>
 
-<div class="row">
-  <div class="col">
-    <h1><%= @project.title %></h1>
-    <%= @project.description %>
-  </div>
-  <div class="col-md-3">
-    <h2>Chats</h2>
-    <!-- ... -->
-
-    <%= button_to "New chat", project_chats_path(@project), class: "btn btn-primary" %>
-  </div>
+<%# ====== Section des visuels ====== %>
+<div class="visuels-entete">
+  <%# titre de la section %>
+  <h2 class="visuels-titre">Vos visuels</h2>
+  <% if @chats.present? %>
+    <%# bouton qui active/désactive le mode suppression des visuels %>
+    <button type="button" id="btn-suppr-visuels" class="btn-suppr-visuels" onclick="basculerSuppressionVisuels(this)">Supprimer un visuel</button>
+  <% end %>
 </div>
 
 <div class="all-projects">
-  <div class="card-trip">
-    <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-    <div class="card-trip-infos">
-      <div>
-        <h2>Title here</h2>
-        <p>Short description here!</p>
+  <%# Cas vide : aucune discussion, donc aucun visuel %>
+  <% if @chats.empty? %>
+    <div class="card-trip">
+      <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+      <div class="card-trip-infos">
+        <div>
+          <h2>Aucun visuel</h2>
+          <p>Crée ta première discussion pour générer un visuel.</p>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 
-  <div class="card-trip">
-    <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-    <div class="card-trip-infos">
-      <div>
-        <h2>Title here</h2>
-        <p>Short description here!</p>
+  <%# Une carte (visuel) par discussion %>
+  <% @chats.each do |chat| %>
+    <div class="card-trip">
+      <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+
+      <div class="card-trip-infos">
+        <div>
+          <% if chat.furniture.present? %>
+            <%# titre et description du meuble proposé %>
+            <h2><%= chat.furniture.title %></h2>
+            <p><%= chat.furniture.description %></p>
+          <% else %>
+            <%# pas encore de meuble : on affiche le titre de la discussion %>
+            <h2><%= chat.title.presence || "Discussion" %></h2>
+            <p>Aucune proposition de mobilier générée pour le moment.</p>
+          <% end %>
+          <%# lien vers la discussion, présent sur toutes les cartes %>
+          <%= link_to "Voir le chat", chat_path(chat), class: "card-lien" %>
+          <%# bouton pour supprimer ce visuel (caché sauf en mode suppression) %>
+          <%= button_to "Supprimer", chat_path(chat), method: :delete, form: { data: { turbo: false }, onsubmit: "return confirm('Supprimer ce visuel ?')" }, class: "btn card-supprimer" %>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
+</div>
 
-  <div class="card-trip">
-    <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-    <div class="card-trip-infos">
-      <div>
-        <h2>Title here</h2>
-        <p>Short description here!</p>
-      </div>
-    </div>
-  </div>
+<%# ====== JavaScript du mode suppression des visuels ====== %>
+<script>
+  // Fonction appelée au clic sur "Supprimer un visuel" / "Terminé"
+  function basculerSuppressionVisuels(bouton) {
+    // on récupère la liste des visuels
+    const liste = document.querySelector('.all-projects');
+    // on ajoute ou enlève la classe "mode-suppression" ; toggle renvoie true si elle est ajoutée
+    const modeActif = liste.classList.toggle('mode-suppression');
+    // si le mode est actif on écrit "Terminé"
+    if (modeActif) {
+      bouton.textContent = "Terminé";
+    // sinon on remet le texte d'origine et on nettoie l'adresse
+    } else {
+      bouton.textContent = "Supprimer un visuel";
+      history.replaceState(null, "", window.location.pathname);
+    }
+  }
 
-<%# <%= link_to "← #{@chat.project.title}", project_path(@chat.project) %>
-
-<% if @chat.present? %>
-  <h1 id="chat_title"><%= @chat.title %></h1>
-<% else %>
-  <p>Aucun chat pour ce projet pour le moment.</p>
-<% end %>
+  // Au chargement : si on revient d'une suppression, on garde le mode actif
+  if (window.location.search.includes("suppression=1")) {
+    // on récupère la liste des visuels
+    const liste = document.querySelector(".all-projects");
+    // on récupère le bouton "Supprimer un visuel"
+    const bouton = document.querySelector("#btn-suppr-visuels");
+    // si les deux existent, on réactive le mode et on affiche "Terminé"
+    if (liste && bouton) {
+      liste.classList.add("mode-suppression");
+      bouton.textContent = "Terminé";
+    }
+  }
+</script>
