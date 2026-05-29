@@ -36,6 +36,16 @@ class ChatsController < ApplicationController
     @chat = Chat.find(params[:id])
   end
 
+  # POST /chats/:id/generer_visuel → génère l'image du meuble décrit par l'IA
+  def generer_visuel
+    # on retrouve la discussion
+    @chat = Chat.find(params[:id])
+    # on génère et attache l'image au meuble de la discussion
+    GenerateFurnitureImageTool.new(furniture: @chat.furniture).execute
+    # on revient sur la page du chat : l'image s'affiche maintenant dans la conversation
+    redirect_to chat_path(@chat)
+  end
+
   # POST /chats/:id/envoyer_proposition → envoie le mail de proposition au client
   def envoyer_proposition
     # on retrouve la discussion

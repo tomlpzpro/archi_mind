@@ -202,7 +202,50 @@
   <% end %>
 </div>
 
-<div class="all-projects">
+<%# CSS pour que les visuels ne soient pas recadrés/zoomés et aient un fond propre %>
+<style>
+  /* le fond coloré : même taille que l'ancienne image, avec un peu d'air autour */
+  .visuels-grille .card-trip > .visuel-fond {
+    height: 190px;
+    width: 100%;
+    /* on centre l'image au milieu du fond coloré */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* l'espace autour de l'image fait apparaître la couleur comme un cadre */
+    padding: 14px;
+    /* coins du haut arrondis pour épouser le cadre de la carte */
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
+  /* l'image elle-même : entière (pas zoomée) et arrondie sur ses 4 coins */
+  .visuels-grille .card-trip > .visuel-fond img {
+    /* on limite l'image à la taille du fond sans la déformer */
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    /* contain = on voit toute l'image sans la couper ni la zoomer */
+    object-fit: contain;
+    /* coins arrondis sur l'image seule */
+    border-radius: 14px;
+  }
+  /* on fait varier la couleur du fond d'une card à l'autre (palette fun) */
+  /* 1re, 7e, 13e... cards : corail */
+  .visuels-grille .card-trip:nth-child(6n+1) > .visuel-fond { background: #FFB5A7; }
+  /* 2e, 8e... cards : jaune doux */
+  .visuels-grille .card-trip:nth-child(6n+2) > .visuel-fond { background: #FCD5A5; }
+  /* 3e, 9e... cards : vert menthe */
+  .visuels-grille .card-trip:nth-child(6n+3) > .visuel-fond { background: #B5EAD7; }
+  /* 4e, 10e... cards : bleu ciel */
+  .visuels-grille .card-trip:nth-child(6n+4) > .visuel-fond { background: #A0D8EF; }
+  /* 5e, 11e... cards : lavande */
+  .visuels-grille .card-trip:nth-child(6n+5) > .visuel-fond { background: #CDB4DB; }
+  /* 6e, 12e... cards : rose poudré */
+  .visuels-grille .card-trip:nth-child(6n+6) > .visuel-fond { background: #FFC8DD; }
+</style>
+
+<div class="all-projects visuels-grille">
   <%# Cas vide : aucune discussion, donc aucun visuel %>
   <% if @chats.empty? %>
     <div class="card-trip">
@@ -230,13 +273,11 @@
       <div class="card-trip-infos">
         <div>
           <% if chat.furniture.present? %>
-            <%# titre et description du meuble proposé %>
+            <%# titre du meuble proposé %>
             <h2><%= chat.furniture.title %></h2>
-            <p><%= chat.furniture.description %></p>
           <% else %>
             <%# pas encore de meuble : on affiche le titre de la discussion %>
             <h2><%= chat.title.presence || "Discussion" %></h2>
-            <p>Aucune proposition de mobilier générée pour le moment.</p>
           <% end %>
           <%# lien vers la discussion, présent sur toutes les cartes %>
           <div class="card-actions">

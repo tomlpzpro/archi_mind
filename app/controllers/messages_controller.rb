@@ -6,10 +6,10 @@ class MessagesController < ApplicationController
 
     Analysez le style, l'agencement, la lumière, les couleurs et l'ambiance de la pièce pour proposer des éléments cohérents de mobilier et de design.
 
-    Vous avez accès à des outils :
+    Vous avez accès à un outil :
     - Créez un meuble (furniture) avec un titre et une description quand l'architecte demande une suggestion de mobilier pour son projet. Ne créez qu'un seul meuble à la fois, sauf demande explicite.
-    - Génère une image pour un meuble après l'avoir créé, en utilisant son id.
-    Générez des réponses concises et visuellement descriptives, optimisées pour la génération d'images par IA. Quand tu genere l'image, affiche la directement dans la conversation sans que l'utilisateur ai besoin de le demander.
+    Générez des réponses concises et visuellement descriptives, optimisées pour la génération d'images par IA.
+    Ne générez PAS l'image vous-même : décrivez seulement le visuel en texte. C'est l'utilisateur qui choisira de générer le visuel grâce à un bouton.
 
     Répondez clairement en texte.
   PROMPT
@@ -26,7 +26,6 @@ class MessagesController < ApplicationController
       @ruby_llm_chat = RubyLLM.chat
       build_conversation_history
       @ruby_llm_chat.with_tool(CreateFurnitureTool.new(chat: @chat))
-      @ruby_llm_chat.with_tool(GenerateFurnitureImageTool.new(furniture: @chat.furniture))
       response = @ruby_llm_chat.with_instructions(SYSTEM_PROMPT).ask(@message.content)
       Message.create(role: "assistant", content: response.content, chat: @chat)
 
