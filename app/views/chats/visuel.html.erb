@@ -1,0 +1,134 @@
+<%# ====== CSS de la page visuel ====== %>
+<style>
+  /* conteneur centré de la page */
+  .visuel-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  /* lien de retour en haut */
+  .visuel-retour {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-family: monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8A8880;
+    text-decoration: none;
+  }
+  .visuel-retour:hover {
+    color: #2C2C2A;
+  }
+  /* le visuel en grand : image avec coins arrondis */
+  .visuel-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 18px;
+    border: 1px solid rgba(44, 44, 42, 0.10);
+  }
+  /* le titre du visuel, en serif */
+  .visuel-titre {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2C2C2A;
+    margin: 24px 0 8px;
+  }
+  /* la description du visuel */
+  .visuel-description {
+    color: #4B4944;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  /* la rangée des deux boutons */
+  .visuel-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  /* style commun aux deux boutons */
+  .visuel-bouton {
+    border-radius: 999px;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid #2C2C2A;
+  }
+  /* "Télécharger" : bouton clair avec contour */
+  .visuel-bouton--telecharger {
+    background: #fff;
+    color: #2C2C2A;
+  }
+  .visuel-bouton--telecharger:hover {
+    background: #F3EFE8;
+  }
+</style>
+
+<%# ====== Contenu de la page ====== %>
+<div class="visuel-page">
+
+  <%# lien pour revenir à la page du projet %>
+  <%= link_to "← Retour au projet", project_path(@chat.project), class: "visuel-retour" %>
+
+  <%# le visuel en grand (image d'exemple pour l'instant) %>
+  <img class="visuel-image" src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" alt="Visuel du projet">
+
+  <%# titre : le meuble s'il existe, sinon le titre de la discussion %>
+  <h1 class="visuel-titre">
+    <% if @chat.furniture.present? %>
+      <%= @chat.furniture.title %>
+    <% else %>
+      <%= @chat.title.presence || "Visuel" %>
+    <% end %>
+  </h1>
+
+  <%# description du visuel %>
+  <p class="visuel-description">
+    <% if @chat.furniture.present? %>
+      <%= @chat.furniture.description %>
+    <% else %>
+      Aucune description pour le moment.
+    <% end %>
+  </p>
+
+  <%# les deux boutons : envoyer et télécharger %>
+  <div class="visuel-actions">
+    <%# bouton "Télécharger" : lance le téléchargement automatique via JavaScript %>
+    <button type="button"
+            class="visuel-bouton visuel-bouton--telecharger"
+            onclick="telechargerVisuel('https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg', 'visuel.jpg')">
+      Télécharger
+    </button>
+  </div>
+
+</div>
+
+<%# ====== JavaScript pour télécharger le visuel ====== %>
+<script>
+  // Fonction qui télécharge l'image automatiquement quand on clique sur "Télécharger"
+  async function telechargerVisuel(url, nomFichier) {
+    // on va chercher l'image à l'adresse donnée
+    const reponse = await fetch(url);
+    // on transforme la réponse en "blob" (le contenu binaire de l'image)
+    const blob = await reponse.blob();
+    // on crée une adresse temporaire qui pointe vers ce blob
+    const urlBlob = URL.createObjectURL(blob);
+    // on crée un lien invisible
+    const lien = document.createElement("a");
+    // on lui donne l'adresse du blob
+    lien.href = urlBlob;
+    // on lui donne le nom du fichier à enregistrer
+    lien.download = nomFichier;
+    // on ajoute le lien à la page, on clique dessus, puis on l'enlève
+    document.body.appendChild(lien);
+    lien.click();
+    document.body.removeChild(lien);
+    // on libère l'adresse temporaire
+    URL.revokeObjectURL(urlBlob);
+  }
+</script>

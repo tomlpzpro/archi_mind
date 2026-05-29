@@ -34,6 +34,11 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
+  # En dev, on ouvre les emails dans le navigateur (gem letter_opener) au lieu de les envoyer
+  config.action_mailer.delivery_method = :letter_opener
+  # on active l'envoi (sinon letter_opener ne se déclenche pas)
+  config.action_mailer.perform_deliveries = true
+
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false
 

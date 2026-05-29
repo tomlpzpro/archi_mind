@@ -106,16 +106,41 @@
     background: #F3EFE8;
   }
 
-  /* le lien "Voir le chat" sur les cartes : terracotta */
-  .card-lien {
-    display: inline-block;
-    margin-top: 10px;
-    color: #C1440E;
-    font-size: 1.05rem;
-    text-decoration: none;
+  /* les deux boutons d'une carte, alignés côte à côte */
+  .card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
   }
-  .card-lien:hover {
-    text-decoration: underline;
+  /* style commun des boutons de carte : même forme pill que partout ailleurs */
+  .card-btn {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid #2C2C2A;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  /* "Voir le visuel" : bouton principal (foncé plein) */
+  .card-btn--primaire {
+    background: #2C2C2A;
+    color: #fff;
+  }
+  .card-btn--primaire:hover {
+    background: #444;
+    border-color: #444;
+  }
+  /* "Voir le chat" : bouton secondaire (clair avec contour) */
+  .card-btn--secondaire {
+    background: #fff;
+    color: #2C2C2A;
+  }
+  .card-btn--secondaire:hover {
+    background: #F3EFE8;
   }
 
   /* le formulaire du bouton supprimer (dans la carte) ne prend pas de marge */
@@ -208,7 +233,12 @@
             <p>Aucune proposition de mobilier générée pour le moment.</p>
           <% end %>
           <%# lien vers la discussion, présent sur toutes les cartes %>
-          <%= link_to "Voir le chat", chat_path(chat), class: "card-lien" %>
+          <div class="card-actions">
+            <%# bouton secondaire vers la discussion %>
+            <%= link_to "Voir le chat", chat_path(chat), class: "card-btn card-btn--secondaire" %>
+            <%# bouton principal vers la page visuel %>
+            <%= link_to "Voir le visuel", visuel_chat_path(chat), class: "card-btn card-btn--primaire" %>
+          </div>
           <%# bouton pour supprimer ce visuel (caché sauf en mode suppression) %>
           <%= button_to "Supprimer", chat_path(chat), method: :delete, form: { data: { turbo: false }, onsubmit: "return confirm('Supprimer ce visuel ?')" }, class: "btn card-supprimer" %>
         </div>

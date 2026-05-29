@@ -15,6 +15,14 @@ Rails.application.routes.draw do
   end
 
   resources :chats, only: [:show, :update, :destroy] do
+    # page "visuel" d'une discussion (GET /chats/:id/visuel)
+    # page "proposition" version client (GET /chats/:id/proposition)
+    member do
+      get :visuel
+      get :proposition
+      # envoi du mail de proposition au client (POST /chats/:id/envoyer_proposition)
+      post :envoyer_proposition
+    end
     resources :messages, only: [:create]
   end
 

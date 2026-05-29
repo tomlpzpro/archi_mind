@@ -1,4 +1,7 @@
 class ChatsController < ApplicationController
+  # la page "proposition" est publique : le client n'a pas besoin d'être connecté
+  skip_before_action :authenticate_user!, only: :proposition
+
   def show
     @chat    = Chat.find(params[:id])
     @message = Message.new
@@ -19,6 +22,28 @@ class ChatsController < ApplicationController
       puts @chat.errors.full_messages
       render "projects/show"
     end
+  end
+
+  # GET /chats/:id/visuel → page qui affiche le visuel de la discussion
+  def visuel
+    # on retrouve la discussion
+    @chat = Chat.find(params[:id])
+  end
+
+  # GET /chats/:id/proposition → page de présentation, version client
+  def proposition
+    # on retrouve la discussion
+    @chat = Chat.find(params[:id])
+  end
+
+  # POST /chats/:id/envoyer_proposition → envoie le mail de proposition au client
+  def envoyer_proposition
+    # on retrouve la discussion
+    @chat = Chat.find(params[:id])
+    # on envoie le mail au client (l'adresse vient du formulaire)
+    VisuelMailer.proposition(@chat, params[:email]).deliver_now
+    # on revient sur la page visuel avec un message de confirmation
+    redirect_to visuel_chat_path(@chat), notice: "Proposition envoyée à #{params[:email]} !"
   end
 
   # # PATCH /chats/:id → met à jour le titre de la discussion
