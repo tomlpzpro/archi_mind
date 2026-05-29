@@ -32,7 +32,14 @@
         <div class="all-projects">
           <% @projects.each do |project| %>
             <article class="card-trip">
-              <div class="card-trip__thumb"></div>
+              <%# on cherche le premier meuble du projet dont l'image (le visuel) est générée %>
+              <% visuel = project.furnitures.find { |furniture| furniture.image.attached? } %>
+              <%# si un visuel existe, on affiche sa photo ; sinon on garde le rectangle de couleur %>
+              <% if visuel %>
+                <%= cl_image_tag visuel.image.key %>
+              <% else %>
+                <div class="card-trip__thumb"></div>
+              <% end %>
               <div class="card-trip-infos">
                 <div>
                   <h2><%= project.title %></h2>
