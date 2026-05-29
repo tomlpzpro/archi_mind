@@ -1,112 +1,166 @@
+// Navbar — Archi Mind
+// ------------------------------------------------------------------
+
 .navbar-lewagon {
-  /* logo à gauche et avatar à droite (éléments répartis aux extrémités) */
+  /* logo à gauche et le reste à droite */
   justify-content: space-between;
-  /* fond crème clair, comme à l'origine */
-  background-color: $surface;
-  /* fine ligne en bas pour séparer la navbar du contenu */
-  border-bottom: 1px solid $line;
-  /* légère ombre sous la navbar pour qu'elle se détache de la page */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  /* épaisseur réduite : peu d'espace en haut/bas, un peu plus sur les côtés */
-  padding: 0.35rem 1.5rem;
-  /* la navbar reste collée en haut quand on descend la page */
+  /* fond clair légèrement translucide (effet verre dépoli) */
+  background-color: rgba(251, 248, 243, 0.82);
+  /* flou de l'arrière-plan derrière la navbar (look moderne) */
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  /* bordure tout autour (la navbar est une capsule détachée) */
+  border: 1px solid $line;
+  /* forme arrondie en capsule */
+  border-radius: $radius-pill;
+  /* ombre douce qui fait "flotter" la navbar */
+  box-shadow: $shadow-md;
+  /* hauteur compacte, un peu d'air sur les côtés */
+  padding: 0.45rem 1.5rem;
+  /* la navbar flotte et reste visible quand on descend, sans toucher le haut */
   position: sticky;
-  /* collée tout en haut de l'écran (0 pixel du bord) */
-  top: 0;
-  /* passe au-dessus du reste du contenu pour ne jamais être cachée */
+  top: 16px;
+  /* toujours au-dessus du contenu */
   z-index: 1000;
+  /* ne prend pas toute la largeur : une marge de chaque côté */
+  width: calc(100% - 32px);
+  /* largeur maximale + centrage horizontal */
+  max-width: 1140px;
+  /* 16px en haut (décollée du bord) puis centrée */
+  margin: 16px auto 0;
 }
 
+/* le conteneur intérieur s'étire sur toute la largeur */
+.navbar-lewagon .container-fluid {
+  /* un peu d'espace réparti entre les éléments */
+  gap: 16px;
+}
+
+/* la zone de droite ne s'étire pas plus que nécessaire */
 .navbar-lewagon .navbar-collapse {
   flex-grow: 0;
 }
 
+/* la marque (logo + nom) à gauche */
 .navbar-lewagon .navbar-brand {
   font-family: $headers-font;
   font-style: italic;
   font-weight: 700;
   font-size: 1.4rem;
   color: $ink;
+  /* logo et texte alignés */
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
   img {
-    /* logo un peu agrandi pour aller avec la photo de profil */
-    height: 46px;
-    /* la largeur s'ajuste automatiquement pour garder les proportions */
+    /* logo bien lisible */
+    height: 44px;
+    /* largeur automatique pour garder les proportions */
     width: auto;
-    /* l'image n'est pas déformée */
+    /* image non déformée */
     object-fit: contain;
-    border-radius: 5px;
+    border-radius: 8px;
   }
 }
 
-// Nav links
+/* les éléments de droite alignés et espacés */
+.navbar-lewagon .navbar-nav {
+  align-items: center;
+  gap: 8px;
+}
+
+/* liens de navigation */
 .navbar-lewagon .nav-link {
   color: $ink-soft;
   font-weight: 500;
+  /* coin arrondi pour le survol */
+  border-radius: $radius-pill;
+  padding: 8px 16px;
+  /* transition douce du fond et de la couleur */
+  transition: color 0.15s ease, background 0.15s ease;
 
-  &:hover { color: $ink; }
+  &:hover {
+    color: $ink;
+    /* léger fond au survol pour montrer que c'est cliquable */
+    background: rgba(44, 44, 42, 0.06);
+  }
 }
 
-// "Login" / pill-style item — e.g. "Mes projets →"
+/* élément "Se connecter" en forme de pilule contour */
 .navbar-lewagon .custom-toggler {
   border: 1px solid $line-strong;
-  border-radius: 999px;
+  border-radius: $radius-pill;
   padding: 0;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
 
   .nav-link {
     color: $ink;
-    padding: 6px 22px;
+    padding: 8px 22px;
+    /* pas de fond au survol ici, c'est la pilule qui réagit */
+    &:hover { background: transparent; }
   }
 
   &:hover {
     background: #fff;
     border-color: $ink;
+    box-shadow: $shadow-sm;
   }
 }
 
-/* La photo de profil : forme ronde et bordure invisible au repos */
+/* La photo de profil : ronde, bordure invisible au repos */
 .navbar-lewagon img.avatar {
-  /* largeur plus grande de la photo */
-  width: 52px;
-  /* même hauteur que la largeur pour garder un cercle parfait */
-  height: 52px;
-  /* l'image remplit le cercle sans être déformée */
+  width: 46px;
+  height: 46px;
+  /* l'image remplit le cercle sans déformation */
   object-fit: cover;
-  /* coins totalement ronds pour suivre la forme de la photo */
   border-radius: 50%;
-  /* bordure ronde transparente (donc invisible) tant qu'on ne survole pas */
+  /* bordure ronde transparente tant qu'on ne survole pas */
   border: 2px solid transparent;
-  /* apparition douce de la bordure au survol */
-  transition: border-color 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* Au survol de la photo, la bordure ronde devient visible */
+/* Au survol de la photo, la bordure devient visible */
 .navbar-lewagon a.avatar:hover img.avatar {
-  /* bordure foncée qui épouse le cercle de la photo */
   border-color: $ink;
+  box-shadow: $shadow-sm;
 }
 
-/* Le lien autour de la photo : aucun cadre, dans tous les états */
+/* Le lien autour de la photo : aucun cadre dans tous les états */
 .navbar-lewagon a.avatar,
 .navbar-lewagon a.avatar:focus,
 .navbar-lewagon a.avatar:active {
-  /* pas de bordure */
   border: none;
-  /* pas de contour du navigateur (le carré au clic) */
   outline: none;
-  /* pas d'ombre */
   box-shadow: none;
-  /* pas d'espace interne qui formerait une boîte autour de la photo */
   padding: 0;
-  /* fond transparent */
   background: transparent;
 }
 
-/* Le menu déroulant Bootstrap : on enlève sa fine ligne carrée et son ombre */
+/* Le menu déroulant : carte propre avec ombre douce */
 .navbar-lewagon .dropdown-menu {
-  /* supprime la bordure (la ligne fine en forme de carré) */
-  border: none;
-  /* supprime l'ombre carrée */
-  box-shadow: none;
+  /* pas de bordure carrée par défaut de Bootstrap */
+  border: 1px solid $line;
+  /* coins arrondis */
+  border-radius: $radius;
+  /* ombre flottante */
+  box-shadow: $shadow-md;
+  /* un peu d'air interne */
+  padding: 8px;
+  margin-top: 10px;
+  background: #fff;
+}
+
+/* chaque option du menu déroulant */
+.navbar-lewagon .dropdown-item {
+  border-radius: $radius-sm;
+  padding: 9px 14px;
+  font-weight: 500;
+  color: $ink-soft;
+  transition: background 0.12s ease, color 0.12s ease;
+
+  &:hover {
+    background: $wash;
+    color: $terracotta;
+  }
 }

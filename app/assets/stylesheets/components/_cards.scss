@@ -1,55 +1,77 @@
-// Project cards — Archi Mind
+// Cartes de projet — Archi Mind
 // ------------------------------------------------------------------
 
+// la grille : des colonnes qui s'ajustent automatiquement
 .all-projects {
-  margin-top: 30px;
+  margin-top: 8px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
+  // chaque carte fait au moins 300px, et on remplit la largeur
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  // espace entre les cartes
+  gap: 26px;
 }
 
+// une carte
 .card-trip {
+  // on cache ce qui dépasse (pour le zoom de l'image)
   overflow: hidden;
+  // fond clair
   background: $surface;
+  // fine bordure
   border: 1px solid $line;
-  border-radius: 16px;
-  box-shadow: 0 1px 2px rgba(44, 44, 42, 0.04);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  // coins arrondis
+  border-radius: $radius;
+  // ombre légère au repos
+  box-shadow: $shadow-sm;
+  // disposition verticale : image en haut, infos en bas
+  display: flex;
+  flex-direction: column;
+  // transitions douces du relief
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 
+  // au survol : la carte se soulève et l'ombre s'agrandit
   &:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
     border-color: $line-strong;
-    box-shadow: 0 12px 30px rgba(44, 44, 42, 0.10);
+    box-shadow: $shadow-lg;
   }
 
+  // l'image (le visuel) ou le bloc de couleur, en haut de la carte
   > img,
   &__thumb {
-    height: 190px;
+    height: 200px;
     width: 100%;
+    // l'image remplit la zone sans déformation
     object-fit: cover;
     display: block;
-    // pas d'espace sous/au-dessus de l'image (évite la fine ligne en haut)
+    // pas d'espace parasite sous l'image
     vertical-align: top;
-    // coins du haut arrondis pour que l'image épouse le cadre de la carte
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-    // warm tinted placeholder feel
+    // dégradé chaud par défaut (quand pas encore de visuel)
     background: linear-gradient(135deg, #E9E0D2, #CDB99E);
+    // zoom doux au survol de la carte
+    transition: transform 0.4s ease;
   }
 
-  // Varied warm tints so the grid feels alive (matches the mockup blocks)
+  // au survol de la carte, l'image zoome très légèrement
+  &:hover > img,
+  &:hover &__thumb {
+    transform: scale(1.05);
+  }
+
+  // teintes variées pour les blocs de couleur (quand pas de visuel)
   &:nth-child(4n+2) &__thumb { background: linear-gradient(135deg, #E4D3C0, #B79B7E); }
   &:nth-child(4n+3) &__thumb { background: linear-gradient(135deg, #D9CDB6, #A8946F); }
   &:nth-child(4n+4) &__thumb { background: linear-gradient(135deg, #E7DBC8, #C2A988); }
 
+  // le titre du projet
   h2 {
     font-family: $headers-font;
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     font-weight: 600;
     margin: 0 0 4px;
   }
 
-  // metadata line — "3 PIÈCES · MAJ IL Y A 2 H"
+  // la ligne d'infos — "3 PIÈCES · MAJ 12/05"
   p {
     font-family: $mono-font;
     font-size: 0.6875rem;
@@ -61,17 +83,22 @@
   }
 }
 
+// la zone d'infos en bas de la carte
 .card-trip .card-trip-infos {
-  padding: 18px 20px;
+  // de l'air interne
+  padding: 18px 20px 20px;
+  // contenu empilé : titre en haut, boutons en dessous
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 12px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  // l'info occupe l'espace restant sous l'image
+  flex: 1;
 }
 
-// "Ouvrir" pill button on each card
+// le bouton pilule "Ouvrir" sur chaque carte
 .card-trip__open {
   flex: 0 0 auto;
-  padding: 6px 16px;
+  padding: 7px 18px;
   font-size: 0.8125rem;
 }

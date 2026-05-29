@@ -1,40 +1,56 @@
-// Global base — applies the Archi Mind look across every page
+// Socle global — applique le style Archi Mind sur toutes les pages
 // ------------------------------------------------------------------
 
+// le corps de la page : fond blanc sur tout le site
 body {
-  background-color: $cream;
+  // couleur de fond blanche
+  background-color: #FFFFFF;
+  // couleur du texte par défaut
   color: $ink;
+  // police de base
   font-family: $body-font;
+  // rendu des polices plus net
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+// la zone de contenu centrée, avec une largeur maximale confortable
 main {
-  max-width: 1100px;
+  // on ne dépasse jamais cette largeur (lecture agréable)
+  max-width: 1140px;
+  // centré horizontalement
   margin: 0 auto;
-  padding: 48px 32px 96px;
+  // de l'air autour du contenu
+  padding: 56px 32px 112px;
 }
 
-// Editorial serif headings with terracotta italic accents
+// Titres éditoriaux en serif, avec accents terracotta en italique
 h1, h2, h3, h4 {
+  // police serif élégante
   font-family: $headers-font;
+  // couleur foncée
   color: $ink;
-  letter-spacing: -0.01em;
+  // léger resserrement des lettres pour un rendu pro
+  letter-spacing: -0.015em;
 }
 
+// très grand titre principal
 h1 {
-  font-size: clamp(2rem, 4vw, 3rem);
+  // taille fluide : s'adapte à la largeur de l'écran
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
   font-weight: 700;
-  line-height: 1.12;
+  // lignes serrées
+  line-height: 1.08;
   margin-bottom: 0.4em;
 }
 
+// titre de section
 h2 {
   font-size: clamp(1.4rem, 2.5vw, 1.9rem);
   font-weight: 600;
 }
 
-// `<em>` inside headings + the `.highlight` span → terracotta italic
+// `<em>` dans les titres + le span `.highlight` → italique terracotta
 h1 em, h2 em, h3 em,
 .highlight {
   color: $terracotta;
@@ -42,15 +58,19 @@ h1 em, h2 em, h3 em,
   font-weight: inherit;
 }
 
-// Body copy
+// texte courant
 p {
   color: $ink-soft;
-  line-height: 1.6;
+  line-height: 1.65;
+  // texte justifié : les lignes s'alignent sur les deux bords
+  text-align: justify;
 }
 
+// liens : terracotta, soulignement animé au survol
 a {
   color: $terracotta;
   text-decoration: none;
+  // transition douce de la couleur
   transition: color 0.15s ease;
 
   &:hover {
@@ -58,7 +78,7 @@ a {
   }
 }
 
-// Monospace micro-label — e.g. "VOS PROJETS", "3 PIÈCES · MAJ 2 H"
+// Petit label en monospace — ex : "VOS PROJETS", "3 PIÈCES · MAJ 2 H"
 %mono-label,
 .label-mono {
   font-family: $mono-font;
@@ -68,13 +88,53 @@ a {
   color: $muted;
 }
 
-// Flash messages
+// la sélection de texte prend la teinte terracotta douce
+::selection {
+  background: rgba(193, 68, 14, 0.16);
+}
+
+// anneau de mise au point visible au clavier (accessibilité)
+:focus-visible {
+  outline: 2px solid $terracotta;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+// ------------------------------------------------------------------
+// Messages flash (notice / alerte) — bannières propres en haut de page
+// ------------------------------------------------------------------
 .notice, .alert {
-  max-width: 1100px;
-  margin: 0 auto;
+  // même largeur que le contenu, centré
+  max-width: 1140px;
+  margin: 24px auto 0;
+  // pour décaler la bannière des bords sur mobile
   padding: 0 32px;
 
+  // quand il n'y a pas de message, on cache totalement la bannière
   &:empty { display: none; }
 }
-.notice { color: $terracotta-soft; }
-.alert  { color: $terracotta; }
+
+// le texte du message devient une vraie petite bannière arrondie
+.notice:not(:empty),
+.alert:not(:empty) {
+  // boîte avec fond, bordure et coin arrondi
+  display: block;
+  padding: 14px 20px;
+  border-radius: $radius-sm;
+  font-weight: 500;
+  box-shadow: $shadow-sm;
+}
+
+// notice (succès / info) : fond vert très clair
+.notice:not(:empty) {
+  background: rgba(30, 221, 136, 0.12);
+  border: 1px solid rgba(30, 221, 136, 0.35);
+  color: #0F7A4A;
+}
+
+// alerte (erreur) : fond terracotta très clair
+.alert:not(:empty) {
+  background: $wash;
+  border: 1px solid rgba(193, 68, 14, 0.30);
+  color: $terracotta;
+}

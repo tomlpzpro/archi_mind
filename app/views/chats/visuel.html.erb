@@ -1,53 +1,101 @@
-<%# ====== Contenu de la page ====== %>
+<%# ====== Page galerie d'un visuel ====== %>
 <div class="visuel-page">
 
   <%# lien pour revenir à la page du projet %>
   <%= link_to "← Retour au projet", project_path(@chat.project), class: "visuel-retour" %>
 
-  <%# le visuel en grand : la photo générée du chat si elle existe, sinon une image d'exemple %>
-  <% if @chat.furniture&.image&.attached? %>
-    <%# l'image générée pour cette discussion (via Cloudinary) %>
-    <%= cl_image_tag @chat.furniture.image.key, class: "visuel-image", alt: "Visuel du projet" %>
-  <% else %>
-    <%# pas encore de visuel généré : on garde une image d'exemple %>
-    <img class="visuel-image" src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" alt="Visuel du projet">
-  <% end %>
+  <%# disposition en deux colonnes : grande image à gauche, infos à droite %>
+  <div class="visuel-layout">
 
-  <%# titre : le meuble s'il existe, sinon le titre de la discussion %>
-  <h1 class="visuel-titre">
-    <% if @chat.furniture.present? %>
-      <%= @chat.furniture.title %>
-    <% else %>
-      <%= @chat.title.presence || "Visuel" %>
-    <% end %>
-  </h1>
+    <%# colonne média : l'image dans son cadre %>
+    <div class="visuel-media">
+      <% if @chat.furniture&.image&.attached? %>
+        <%# l'image générée pour cette discussion (via Cloudinary) ; au clic on l'ouvre en grand %>
+        <%= cl_image_tag @chat.furniture.image.key, class: "visuel-image", alt: "Visuel du projet", onclick: "ouvrirLightbox(this.src)" %>
+      <% else %>
+        <%# pas encore de visuel généré : on garde une image d'exemple (cliquable aussi) %>
+        <img class="visuel-image" src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" alt="Visuel du projet" onclick="ouvrirLightbox(this.src)">
+      <% end %>
+    </div>
 
-  <%# description du visuel %>
-  <p class="visuel-description">
-    <% if @chat.furniture.present? %>
-      <%= @chat.furniture.description %>
-    <% else %>
-      Aucune description pour le moment.
-    <% end %>
-  </p>
+    <%# colonne infos : sur-titre, titre, description, actions %>
+    <aside class="visuel-infos">
 
-  <%# on prépare l'adresse de l'image à télécharger : la photo du chat si elle existe, sinon l'exemple %>
-  <% url_visuel = @chat.furniture&.image&.attached? ? cl_image_path(@chat.furniture.image.key) : "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" %>
+      <%# sur-titre : "VISUEL · nom du projet" %>
+      <p class="visuel-surtitre">Visuel · <%= @chat.project.title %></p>
 
-  <%# les deux boutons : envoyer et télécharger %>
-  <div class="visuel-actions">
-    <%# bouton "Télécharger" : lance le téléchargement automatique via JavaScript %>
-    <button type="button"
-            class="visuel-bouton visuel-bouton--telecharger"
-            onclick="telechargerVisuel('<%= url_visuel %>', 'visuel.jpg')">
-      Télécharger
-    </button>
+      <%# titre : le meuble s'il existe, sinon le titre de la discussion %>
+      <h1 class="visuel-titre">
+        <% if @chat.furniture.present? %>
+          <%= @chat.furniture.title %>
+        <% else %>
+          <%= @chat.title.presence || "Visuel" %>
+        <% end %>
+      </h1>
+
+      <%# description du visuel %>
+      <p class="visuel-description">
+        <% if @chat.furniture.present? %>
+          <%= @chat.furniture.description %>
+        <% else %>
+          Aucune description pour le moment.
+        <% end %>
+      </p>
+
+      <%# on prépare l'adresse de l'image à télécharger : la photo du chat si elle existe, sinon l'exemple %>
+      <% url_visuel = @chat.furniture&.image&.attached? ? cl_image_path(@chat.furniture.image.key) : "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" %>
+
+      <%# les boutons d'action %>
+      <div class="visuel-actions">
+        <%# bouton principal : télécharge l'image via JavaScript %>
+        <button type="button"
+                class="btn btn-primary"
+                onclick="telechargerVisuel('<%= url_visuel %>', 'visuel.jpg')">
+          ↓ Télécharger
+        </button>
+        <%# bouton secondaire : revenir à la discussion %>
+        <%= link_to "Voir la discussion", chat_path(@chat), class: "btn btn-pill" %>
+      </div>
+
+    </aside>
+
   </div>
-
 </div>
 
-<%# ====== JavaScript pour télécharger le visuel ====== %>
+<%# ====== Lightbox : calque qui affiche l'image en grand ====== %>
+<%# caché par défaut ; un clic n'importe où dessus le referme %>
+<div class="lightbox" id="lightbox" onclick="fermerLightbox()">
+  <%# l'image agrandie ; sa source est remplie en JavaScript au clic %>
+  <img class="lightbox__image" id="lightbox-image" src="" alt="Visuel en grand">
+</div>
+
+<%# ====== JavaScript de la page visuel ====== %>
 <script>
+  // Ouvre la lightbox avec l'image cliquée
+  function ouvrirLightbox(adresseImage) {
+    // on récupère le calque et l'image agrandie
+    const calque = document.getElementById("lightbox");
+    const image = document.getElementById("lightbox-image");
+    // on met dans la grande image la même source que celle cliquée
+    image.src = adresseImage;
+    // on affiche le calque
+    calque.classList.add("ouvert");
+  }
+
+  // Ferme la lightbox
+  function fermerLightbox() {
+    // on cache le calque
+    document.getElementById("lightbox").classList.remove("ouvert");
+  }
+
+  // On peut aussi fermer la lightbox avec la touche Échap
+  document.addEventListener("keydown", function (evenement) {
+    // si la touche pressée est "Escape", on ferme
+    if (evenement.key === "Escape") {
+      fermerLightbox();
+    }
+  });
+
   // Fonction qui télécharge l'image automatiquement quand on clique sur "Télécharger"
   async function telechargerVisuel(url, nomFichier) {
     // on va chercher l'image à l'adresse donnée
