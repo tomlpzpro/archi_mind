@@ -262,13 +262,16 @@
   <%# Une carte (visuel) par discussion %>
   <% @chats.each do |chat| %>
     <div class="card-trip">
-      <% if chat.furniture&.image&.attached? %>
-        <%# la photo générée pour cette discussion (via Cloudinary) %>
-        <%= cl_image_tag chat.furniture.image.key %>
-      <% else %>
-        <%# pas encore de visuel généré : on garde une image par défaut %>
-        <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-      <% end %>
+      <%# ce div porte la couleur de fond ; l'image arrondie est posée dessus %>
+      <div class="visuel-fond">
+        <% if chat.furniture&.image&.attached? %>
+          <%# le visuel généré pour cette discussion %>
+          <%= cl_image_tag chat.furniture.image.key %>
+        <% else %>
+          <%# pas encore de visuel généré : on garde une image par défaut %>
+          <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+        <% end %>
+      </div>
 
       <div class="card-trip-infos">
         <div>
